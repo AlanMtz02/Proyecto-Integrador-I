@@ -1,4 +1,5 @@
 from django.db import models
+from usuarios.models import Usuario
 
 #Nombre en la base de dato: clinica_paciente
 class Paciente(models.Model):
@@ -37,4 +38,57 @@ class Paciente(models.Model):
     es_activo = models.BooleanField(default=True, verbose_name="Estatus Activo")
 
     def __str__(self):
-        return f"{self.nombre} {self.apellidos} ({self.curp})"
+        return f"{self.nombre} {self.apellidos} (ID: {self.id})"
+
+
+
+
+# Nombre en la base de datos: clinica_notamedica
+class NotaMedica(models.Model):
+    CONSULTA_CHOICES = [
+        ('General', 'Medicina General'),
+        ('Especialidad', 'Especialidad'),
+        ('Urgencia', 'Urgencia'),
+        ('Chequeo', 'Chequeo'),
+    ]
+
+    # ---COLUMNAS DE LA TABLA---
+
+    # Relaciones (Llaves foraneas)
+    # Vincula la nota con un paciente. Si el paciente se borra, se borran sus notas (on_delete=CASCADE)
+    paciente = models.ForeignKey(
+        'Paciente', on_delete=models.CASCADE, verbose_name="Paciente")
+
+    # Vincula con el Doctor que está logueado
+    doctor = models.ForeignKey(
+        Usuario, on_delete=models.SET_NULL, null=True, verbose_name="Doctor")
+
+    # Fecha y Hora (automatico)
+    fecha_hora = models.DateTimeField(
+        auto_now_add=True, verbose_name="Fecha y Hora de atención")
+
+    # Tipo de consulta con opciones definidas
+    tipo_consulta = models.CharField(
+        max_length=20, choices=CONSULTA_CHOICES, verbose_name="Tipo de Consulta")
+
+    motivo_consulta = models.TextField(verbose_name="Motivo de Consulta")
+
+    # Signos Vitales (TODOS OPCIONALES)
+    peso = models.DecimalField(
+        max_digits=5, decimal_places=2, verbose_name="Peso (kg)", blank=True, null=True)
+    estatura = models.DecimalField(
+        max_digits=5, decimal_places=2, verbose_name="Estatura (m)", blank=True, null=True)
+    temperatura = models.DecimalField(
+        max_digits=4, decimal_places=1, verbose_name="Temperatura (°C)", blank=True, null=True)
+    imc = models.DecimalField(
+        max_digits=4, decimal_places=1, verbose_name="IMC", blank=True, null=True)
+    presion_arterial = models.CharField(
+        max_length=20, verbose_name="Presión Arterial", blank=True, null=True)
+    ritmo_cardiaco = models.IntegerField(
+        verbose_name="Ritmo Cardíaco (bpm)", blank=True, null=True)
+
+    exploracion_fisica = models.TextField(verbose_name="Exploración Física")
+    diagnostico = models.TextField(verbose_name="Diagnóstico")
+
+    def __str__(self):
+        return f"Nota de {self.paciente} - {self.fecha_hora.strftime('%d/%m/%Y %H:%M')}"
