@@ -108,6 +108,8 @@ class Medicamento(models.Model):
     dosis = models.CharField(max_length=100, verbose_name="Dosis (Ej: 500mg)")
     frecuencia = models.CharField(max_length=100, verbose_name="Frecuencia (Ej: Cada 8 horas)")
     duracion = models.CharField(max_length=100, verbose_name="Duración del tratamiento (Ej: 7 días)")
-
+    # Agregamos el campo aquí mismo
+    indicaciones = models.TextField(verbose_name="Indicaciones adicionales", blank=True, null=True)
+    
     def __str__(self):
         return f"{self.nombre} - {self.nota_medica.paciente.nombre}"
