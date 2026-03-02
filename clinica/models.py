@@ -56,8 +56,7 @@ class NotaMedica(models.Model):
 
     # Relaciones (Llaves foraneas)
     # Vincula la nota con un paciente. Si el paciente se borra, se borran sus notas (on_delete=CASCADE)
-    paciente = models.ForeignKey(
-        'Paciente', on_delete=models.CASCADE, verbose_name="Paciente")
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, verbose_name="Paciente")
 
     # Vincula con el Doctor que está logueado
     doctor = models.ForeignKey(
@@ -92,3 +91,23 @@ class NotaMedica(models.Model):
 
     def __str__(self):
         return f"Nota de {self.paciente} - {self.fecha_hora.strftime('%d/%m/%Y %H:%M')}"
+
+
+#Nombre en la base de datos: clinica_medicamento
+class Medicamento(models.Model):
+    
+    #---COLUMNAS DE LA TABLA---
+    #id-->Se genera automaticamente, autoincrementable y es PRIMARY KEY
+    # Relación: Un medicamento pertenece a UNA nota médica específica
+    # related name sirve hacer tipo nota_medica.medicamentos.all para obtener todos los medicamentos de esa nota
+    nota_medica = models.ForeignKey(
+        NotaMedica, on_delete=models.CASCADE, related_name='medicamentos', verbose_name="Nota Médica")
+    
+    #Todos son campos de texto
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del Medicamento")
+    dosis = models.CharField(max_length=100, verbose_name="Dosis (Ej: 500mg)")
+    frecuencia = models.CharField(max_length=100, verbose_name="Frecuencia (Ej: Cada 8 horas)")
+    duracion = models.CharField(max_length=100, verbose_name="Duración del tratamiento (Ej: 7 días)")
+
+    def __str__(self):
+        return f"{self.nombre} - {self.nota_medica.paciente.nombre}"
