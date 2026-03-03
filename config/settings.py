@@ -123,4 +123,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'usuarios.Usuario' #Ignora el usuario por defecto y utiliza el que creamos en la app usuarios llamado Usuario
+AUTH_USER_MODEL = 'usuarios.Usuario'
