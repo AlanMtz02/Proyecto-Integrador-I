@@ -1,0 +1,43 @@
+<!--Recibe las variables paciente-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>}<h2>{% if paciente %}Editar{% else %}Nuevo{% endif %} Paciente</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <input type="text" name="curp" placeholder="CURP" value="{{ paciente.curp }}" maxlength="18" required>
+    <input type="text" name="nombre" placeholder="Nombre" value="{{ paciente.nombre }}" required>
+    <input type="text" name="apellidos" placeholder="Apellidos" value="{{ paciente.apellidos }}" required>
+    <input type="date" name="fecha_nacimiento" value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}" required>
+    
+    <select name="genero" required>
+        <option value="">Seleccione Género</option>
+        <option value="M" {% if paciente.genero == 'M' %}selected{% endif %}>Masculino</option>
+        <option value="F" {% if paciente.genero == 'F' %}selected{% endif %}>Femenino</option>
+        <option value="O" {% if paciente.genero == 'O' %}selected{% endif %}>Otro</option>
+    </select>
+
+    <select name="tipo_sangre" required>
+        <option value="">Tipo de Sangre</option>
+        {% for codigo, nombre in sangres %}
+            <option value="{{ codigo }}" {% if paciente.tipo_sangre == codigo %}selected{% endif %}>{{ nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <textarea name="alergias" placeholder="Alergias (si no tiene, dejar vacío)">{{ paciente.alergias }}</textarea>
+
+    <textarea name="direccion" placeholder="Dirección completa">{{ paciente.direccion }}</textarea>
+    <input type="text" name="telefono" placeholder="Teléfono" value="{{ paciente.telefono }}">
+    
+    <button type="submit">Guardar Paciente</button>
+    <a href="{% url 'lista_pacientes' %}">Cancelar</a>
+</form>
+
+</body>
+</html>

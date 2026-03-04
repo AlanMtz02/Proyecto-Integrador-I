@@ -1,0 +1,21 @@
+<!--Recibe la variable paciente-->
+<!--Para aplicarle estilos a los campos debe ser en forms-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Eliminar Paciente</h2>
+    <p>¿Seguro que quieres eliminar a {{ paciente.nombre }} {{ paciente.apellidos }}?</p>
+    <form method="post">
+        {% csrf_token %}<!--Estos son los campos-->
+        <button type="submit">Sí, eliminar</button>
+    </form>
+    <a href="{% url 'lista_pacientes' %}">Cancelar</a>
+
+    
+</body>
+</html>

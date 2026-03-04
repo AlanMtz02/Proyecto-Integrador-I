@@ -1,0 +1,26 @@
+<!--Tiene acceso a las variables que reciben sus hijos (lo que extiendan de él)-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Expediente</title>
+</head>
+<body>
+    <h2>Expediente de {{ paciente.nombre }} {{ paciente.apellidos }}</h2>
+    <p><strong>CURP:</strong> {{ paciente.curp }}</p>
+    <p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
+    <p><strong>Tipo de sangre:</strong> {{ paciente.tipo_sangre }}</p>
+    <p><strong>Alergias:</strong> {{ paciente.alergias|default:"Ninguna" }}</p>
+
+    <!-- Botón sin funcionalidad -->
+    <a href="#">+ Nueva Nota Médica</a>
+
+    <ul>
+        <li><a href="{% url 'expediente_notas' paciente.id %}">Notas Médicas</a></li>
+        <li><a href="{% url 'expediente_medicamentos' paciente.id %}">Medicamentos</a></li>
+        <li><a href="{% url 'expediente_vacunas' paciente.id %}">Vacunación</a></li>
+    </ul>
+
+    {% block content %}{% endblock %}
+</body>
+</html>

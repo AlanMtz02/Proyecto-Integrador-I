@@ -1,0 +1,13 @@
+<!--Recibe la variable medicamentos,paciente-->
+{% extends 'clinica/base_expediente.html' %}
+
+{% block content %}
+<h3>Historial de Medicamentos</h3>
+<ul>
+    {% for med in medicamentos %}<!--Iterar-->
+        <li>{{ med.nombre }} - {{ med.dosis }} - {{ med.frecuencia }} - {{ med.duracion }}</li>
+    {% empty %}
+        <li>No hay medicamentos registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

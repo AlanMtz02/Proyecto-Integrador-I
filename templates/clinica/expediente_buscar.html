@@ -1,0 +1,39 @@
+<!--Recibe -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Expediente Clínico</h2>
+    <p>Busque un paciente por nombre, CURP o teléfono para acceder a su historial médico completo.</p>
+
+    <input type="text" id="buscador" placeholder="Buscar paciente (Ej. Juan Pérez, P-123...)">
+    <ul id="resultados"></ul><!--Aqui se van mostrando los resultados-->
+    <a href="{% url 'lista_pacientes' %}">Menu: Pacientes</a>
+
+<script>
+    //Obtener el input 
+    document.getElementById('buscador').addEventListener('keyup', function() {
+    let query = this.value;//Obtener lo que se escribio en el input 
+    if (query.length > 2) {  // empieza a buscar a partir de 3 caracteres
+        fetch(`/expediente/buscar/?q=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                let lista = document.getElementById('resultados');//Obtener el ul donde se muestran los resultados
+                lista.innerHTML = '';
+                data.forEach(p => {
+                    let item = document.createElement('li');//Se crean un li para cada item
+                    item.innerHTML = `<a href="/expediente/${p.id}/">${p.nombre} - ${p.curp}</a>`;//Contenido del li
+                    lista.appendChild(item);
+                });
+            });
+    }
+});
+</script>
+
+    
+</body>
+</html>

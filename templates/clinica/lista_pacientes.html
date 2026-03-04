@@ -1,0 +1,56 @@
+<!--Recibe la variable pacientes,query.Ademas tiene acceso a la variable user que es el que esta logueado-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pacientes</title>
+</head>
+<body>
+    <h2>Lista de Pacientes</h2>
+    <a href="{% url 'crear_paciente' %}">+ Nuevo Paciente</a><!--Esta en urls.py-->
+    <a href="{% url 'expediente_buscar' %}">Menu: Expediente</a><!--Esta en urls.py-->
+
+
+<!-- Buscador -->
+<form method="get">
+    <input type="text" name="q" placeholder="Buscar pacientes..." value="{{ query }}"><!--Es el valor que recibe la vista listapacientes.-->
+    <button type="submit">Buscar</button>
+</form>
+
+
+<!-- Tabla de pacientes -->
+<table>
+    <thead>
+        <tr>
+            <th>Paciente</th>
+            <th>Teléfono</th>
+            <th>Fecha Nac.</th>
+            <th>Tipo Sangre</th>
+            <th>Alergias</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for paciente in pacientes %}<!--Iterar sobre pacientes-->
+        <tr>
+            <td>{{ paciente.nombre }} {{ paciente.apellidos }}</td>
+            <td>{{ paciente.telefono }}</td>
+            <td>{{ paciente.fecha_nacimiento|date:"d/m/Y" }}</td>
+            <td>{{ paciente.tipo_sangre }}</td>
+            <td>{{ paciente.alergias|default:"Ninguna" }}</td>
+            <td>
+                <a href="{% url 'editar_paciente' paciente.id %}">Editar</a><!--Esta en urls.py-->
+                <a href="{% url 'eliminar_paciente' paciente.id %}">Eliminar</a><!--Esta en urls.py-->
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No se encontraron pacientes.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+</body>
+</html>

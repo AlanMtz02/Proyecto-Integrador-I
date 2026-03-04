@@ -1,0 +1,14 @@
+<!--Recibe la varuable notas,paciente-->
+{% extends 'clinica/base_expediente.html' %}
+
+{% block content %}
+<h3>Historial de Notas Médicas</h3>
+<ul>
+    {% for nota in notas %}
+        <li>{{ nota.fecha_hora|date:"d/m/Y H:i" }} - {{ nota.tipo_consulta }} - {{ nota.diagnostico }}</li>
+    {% empty %}
+        <li>No hay notas médicas registradas.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
