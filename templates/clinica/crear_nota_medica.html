@@ -1,0 +1,83 @@
+<!--Extendera de base.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<h2>Nueva Nota Médica para {{ paciente.nombre }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Consulta General -->
+    <h4>Consulta General</h4>
+    {{ nota_form.as_p }}
+
+    <!-- Medicamentos -->
+    <h4>Medicamentos</h4>
+    {{ medicamento_formset.management_form }}<!--Genera inputs ocultos (TOTAL_FORMS,INITIAL_FORMS,etc).Contador oficial de formularios-->
+    <div id="medicamento-forms">
+        {% for form in medicamento_formset %}<!--Recorre cada formulario del formset. Como extra=1, solo muestra 1, conforme se presiona el boton agregar, se van mostrando mas -->
+            <div class="medicamento-form">
+                {{ form.as_p }}<!--Dibuja cada campo del formulario dentro de un <p>-->
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-medicamento">+ Agregar Medicamento</button>
+
+    <!-- Vacunas -->
+    <h4>Vacunas</h4>
+    {{ vacuna_formset.management_form }}<!--Genera inputs ocultos (TOTAL_FORMS,INITIAL_FORMS,etc).Contador oficial de formularios-->
+    <div id="vacuna-forms">
+        {% for form in vacuna_formset %}<!--Recorre cada formulario del formset. Como extra=1, solo muestra 1-->
+            <div class="vacuna-form">
+                {{ form.as_p }}<!--Dibuja cada campo del formulario dentro de un <p>-->
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-vacuna">+ Agregar Vacuna</button>
+
+    <br><br>
+    <button type="submit" class="btn btn-primary">Guardar Nota Médica</button>
+</form>
+
+<!-- Script para clonar formularios dinámicamente -->
+<script>
+    function addForm(prefix) {
+        // Contenedor de formularios
+        let container = document.getElementById(prefix + '-forms');
+        // Número actual de formularios
+        let totalForms = document.querySelector('#id_' + prefix + '-TOTAL_FORMS');
+        let formCount = parseInt(totalForms.value);
+
+        // Clonar el primer formulario
+        let newForm = container.children[0].cloneNode(true);
+
+        // Actualizar los índices en los atributos name y id
+        newForm.innerHTML = newForm.innerHTML.replace(
+            new RegExp(prefix + '-0', 'g'),
+            prefix + '-' + formCount
+        );
+
+        // Agregar el nuevo formulario al contenedor
+        container.appendChild(newForm);
+
+        // Incrementar el contador de formularios
+        totalForms.value = formCount + 1;
+    }
+
+    // Botones
+    document.getElementById('add-medicamento').addEventListener('click', function() {
+        addForm('medicamento'); // Ojo: es el prefix de la vista crear_nota_medica.busca id="medicamento-forms"
+    });
+
+    document.getElementById('add-vacuna').addEventListener('click', function() {
+        addForm('vacuna'); //Busca id="vacuna-forms"
+    });
+</script>
+</body>
+</html>

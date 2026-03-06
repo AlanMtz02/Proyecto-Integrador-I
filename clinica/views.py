@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Paciente, NotaMedica, Medicamento, Vacuna 
-from .forms import NotaMedicaForm, MedicamentoFormSet, VacunaFormSet,PacienteForm #Formularios
+from .forms import NotaMedicaForm, MedicamentoForm, VacunaForm,PacienteForm #Formularios
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.forms import modelformset_factory
 
 @login_required
 # LISTAR
@@ -71,79 +72,133 @@ def buscar_pacientes(request):
     
     return JsonResponse(resultados, safe=False)
 
-# Vista detalle del expediente 
-# views.py
 
-@login_required
-def detalle_paciente(request, paciente_id): #Mismo argumento que esta en urls.py
-    #Se reutiliza codigo ya que el expediente abre por defecto el menu notas medicas
-    return expediente_notas(request, paciente_id)
-
+#Es la pantalla "principal" al entrar al expediente. Es el que muesyta las notas medicas
 @login_required
 def expediente_notas(request, paciente_id):#Mismo argumento que esta en urls.py
-    paciente = get_object_or_404(Paciente, id=paciente_id)
-    notas = NotaMedica.objects.filter(paciente=paciente)
+    paciente = get_object_or_404(Paciente, id=paciente_id) #paciente
+    
+    #Ordenadas por fecha
+    notas = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora') #notas medicas
+    
+    #Ultima nota medica (none si no hay). La mas reciente. La usara base_expediente.html
+    ultima_nota=notas.first() 
     # Se la manda a la de notas ya que es la que se abre por defecto
     return render(request, 'clinica/expediente_notas.html', {
         'paciente': paciente,
-        'notas': notas
+        'notas': notas,
+        'ultima_nota':ultima_nota, #base_expediente.html
     })
+
 
 @login_required
 def expediente_medicamentos(request, paciente_id): #Mismo argumento que esta en urls.py
     paciente = get_object_or_404(Paciente, id=paciente_id) 
-    medicamentos = Medicamento.objects.filter(paciente=paciente) 
-    return render(request, 'clinica/expediente_medicamentos.html', {'paciente': paciente, 'medicamentos': medicamentos}) 
+    
+    #Ordenados por fecha
+    medicamentos = Medicamento.objects.filter(paciente=paciente).order_by('-nota_medica__fecha_hora')
+    
+    # Ultima nota medica (none si no hay). La mas reciente. La usara base_expediente.html
+    ultima_nota = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora').first()    
+    
+    return render(request, 'clinica/expediente_medicamentos.html', {
+        'paciente': paciente, 
+        'medicamentos': medicamentos,
+        'ultima_nota':ultima_nota,#base_expediente.html
+        }) 
+
 
 @login_required
 def expediente_vacunas(request, paciente_id): 
-    paciente = get_object_or_404(Paciente, id=paciente_id) 
-    vacunas = Vacuna.objects.filter(paciente=paciente) 
-    return render(request, 'clinica/expediente_vacunas.html', {'paciente': paciente, 'vacunas': vacunas})
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    
+    #Ordenas por fecha 
+    vacunas = Vacuna.objects.filter(paciente=paciente).order_by('fecha_aplicacion')
+    
+    # Ultima nota medica (none si no hay). La mas reciente. La usara base_expediente.html
+    ultima_nota = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora').first()  
+    
+    return render(request, 'clinica/expediente_vacunas.html', {
+        'paciente': paciente, 
+        'vacunas': vacunas,
+        'ultima_nota':ultima_nota,#base_expediente.html
+        })
 
 
 @login_required 
-def crear_nota_medica(request, paciente_id): #Mismo argumento que en urls.py.Se ocupa porque automaticamente debe estar asignado al paciente que estamos viendo el expediente
-    #Obtener el paciente
-    paciente = get_object_or_404(Paciente, id=paciente_id) 
-    #Al presionar el boton guardar
+def crear_nota_medica(request, paciente_id): #Mismo argumento que esta en urls.py
+    paciente = get_object_or_404(Paciente, id=paciente_id)  
+    
+    
+    #---GRUPO DE FORMULARIOS---
+    #Solo un formulario por defecto se muestra
+    #No aparece un checbox para eliminarlo.Solo se agregan
+    MedicamentoFormSet = modelformset_factory(Medicamento, form=MedicamentoForm, extra=1, can_delete=False) 
+    VacunaFormSet = modelformset_factory(Vacuna, form=VacunaForm, extra=1, can_delete=False) 
+    
+    #Al presionar el boton guardar nota medica
     if request.method == 'POST': 
-        form = NotaMedicaForm(request.POST) #Los campos del formulario se llenan con los datos que puso
-        medicamento_formset = MedicamentoFormSet(request.POST, queryset=Medicamento.objects.none()) 
-        vacuna_formset = VacunaFormSet(request.POST, queryset=Vacuna.objects.none()) 
+        nota_form = NotaMedicaForm(request.POST) #Llenar el formulario con los datos ingresados
         
-        if form.is_valid() and medicamento_formset.is_valid() and vacuna_formset.is_valid(): 
+        #---Se crea un registro de formulario---
+        #Se crea con los datos que ingreso, si es la primera vez que abre la pagina es none
+        #queryset=El campo esta vacio ya que solo esta lo que el usuario esta escribiendo (si no aparecerian los medicamentos/vacunas viejos)
+        #prefix=nombre unico/identificador de dicho formulario 
+        medicamento_formset = MedicamentoFormSet(request.POST or None, queryset=Medicamento.objects.none(),prefix="medicamento") #crea un conjunto de formularios de medicamentos con los datos enviados
+        
+        vacuna_formset = VacunaFormSet(request.POST or None, queryset=Vacuna.objects.none(),prefix="vacuna") ##crea un conjunto de formularios de vacunas con los datos enviados
+        
+        
+        if nota_form.is_valid() and medicamento_formset.is_valid() and vacuna_formset.is_valid(): # Guardar la nota médica 
+            nota = nota_form.save(commit=False)
+            nota.paciente = paciente #AAsignar la nota al paciente
+            nota.doctor = request.user #Asignar la nota al doctor logueado
             
-            # Guardar la nota médica 
-            nota = form.save(commit=False) 
-            nota.paciente = paciente 
-            nota.doctor = request.user #Doctor logueado
+            # Calcular IMC automáticamente si hay peso y estatura
+            if nota.peso and nota.estatura and nota.estatura > 0: 
+                nota.imc = round(nota.peso / (nota.estatura ** 2), 1) 
+            
+            #Guardar la nota ahora
             nota.save() 
-            
-            # Guardar medicamentos completos
+                
+            # Guardar medicamentos válidos 
             for m_form in medicamento_formset: 
-                if m_form.cleaned_data and any(m_form.cleaned_data.values()): 
-                    medicamento = m_form.save(commit=False) 
-                    medicamento.paciente = paciente #Asociar el medicamento al paciente
-                    medicamento.nota = nota #Asociar el medicamento a una nota
-                    medicamento.save() 
+                cd = m_form.cleaned_data 
+                #ejemplo de lo que contiene cd
+                # {'nombre': 'Paracetamol', 'dosis': '500 mg',
+                #     'frecuencia': 'cada 8 horas', 'duracion': '5 días', 'indicaciones': ''}
                     
-            # Guardar vacunas completas 
+                #Validar que los campos obligatorios se llenen para que guarde
+                if cd and cd.get('nombre') and cd.get('dosis') and cd.get('frecuencia') and cd.get('duracion'): 
+                    medicamento = m_form.save(commit=False)
+                    medicamento.nota_medica = nota 
+                    medicamento.paciente = paciente 
+                    medicamento.save() #GUARDAR MEDICAMENTO (ya que ya ingreso los campos obligatorios)
+                        
+            # Guardar vacunas válidas 
             for v_form in vacuna_formset: 
-                if v_form.cleaned_data and any(v_form.cleaned_data.values()): 
-                    vacuna = v_form.save(commit=False) 
-                    vacuna.paciente = paciente #Asociar la vacuna al paciente
-                    vacuna.nota = nota 
-                    vacuna.save() 
-            
-            return redirect('detalle_paciente', paciente_id=paciente.id) 
-        
-        else: #Formulario no valido
-            return render(request, 'clinica/crear_nota_medica.html', {'form': form, 'medicamento_formset': medicamento_formset, 'vacuna_formset': vacuna_formset, 'paciente': paciente})
-            
-    else:
-        form = NotaMedicaForm() #Cuando se abre, los campos estan vacios
-        medicamento_formset = MedicamentoFormSet(queryset=Medicamento.objects.none()) 
-        vacuna_formset = VacunaFormSet(queryset=Vacuna.objects.none())
-        
-    return render(request, 'clinica/crear_nota_medica.html', { 'form': form, 'medicamento_formset': medicamento_formset, 'vacuna_formset': vacuna_formset, 'paciente': paciente })
+                cd = v_form.cleaned_data 
+                #Validar que los campos obligatorios se llenen para que se guarde
+                # ejemplo de lo que contiene cd
+                # {'nombre': 'Paracetamol', 'dosis': '500 mg',
+                #     'frecuencia': 'cada 8 horas', 'duracion': '5 días', 'indicaciones': ''}  
+                
+                                  
+                #Con cd.get('nombre') preguntamos si el campo nombre tiene algo escrito
+                if cd and cd.get('nombre') and cd.get('dosis') and cd.get('lote') and cd.get('fecha_aplicacion'): 
+                    vacuna = v_form.save(commit=False)
+                    vacuna.nota_medica = nota
+                    vacuna.paciente = paciente 
+                    vacuna.save() #GUARDAR VACUNA (ya que ya ingreso los campos obligatorios)
+                        
+        # Redirigir al expediente (notas médicas) cuando presiona el boton guardar nota medica 
+        return redirect('expediente_notas', paciente_id=paciente.id) 
+    
+    else: #Cuando entra por primera vez, se muestran los campos vacios
+        #---GRUPO DE FORMULARIOS---
+        nota_form = NotaMedicaForm() 
+        medicamento_formset = MedicamentoFormSet(queryset=Medicamento.objects.none(),prefix="medicamento") 
+        vacuna_formset = VacunaFormSet(queryset=Vacuna.objects.none(),prefix="vacuna") 
+    
+    #Mostrar crear_nota_medica.html
+    return render(request, 'clinica/crear_nota_medica.html', { 'nota_form': nota_form, 'medicamento_formset': medicamento_formset, 'vacuna_formset': vacuna_formset, 'paciente': paciente, })

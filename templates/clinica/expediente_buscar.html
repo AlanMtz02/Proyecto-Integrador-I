@@ -26,7 +26,7 @@
                 lista.innerHTML = '';
                 data.forEach(p => {
                     let item = document.createElement('li');//Se crean un li para cada item
-                    item.innerHTML = `<a href="/expediente/${p.id}/">${p.nombre} - ${p.curp}</a>`;//Contenido del li
+                    item.innerHTML = `<a href="/expediente/${p.id}/notas/">${p.nombre} - ${p.curp}</a>`; //Ruta expediente_notas /expediente/<int:paciente_id>/notas/
                     lista.appendChild(item);
                 });
             });

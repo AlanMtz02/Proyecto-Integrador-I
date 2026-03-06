@@ -4,8 +4,13 @@
 {% block content %}
 <h3>Historial de Medicamentos</h3>
 <ul>
-    {% for med in medicamentos %}<!--Iterar-->
-        <li>{{ med.nombre }} - {{ med.dosis }} - {{ med.frecuencia }} - {{ med.duracion }}</li>
+    {% for med in medicamentos %}<!--Iterar sobre medicamentos-->
+        <li>
+            Fecha: {{med.nota_medica.fecha_hora|date:"d/m/Y H:i"}} {{ med.nombre }} - {{ med.dosis }} - {{ med.frecuencia }} - {{ med.duracion }}.
+            {% if med.indicaciones %}<!--Si existen indicaciones, se muestran-->
+                <br><em>Indicaciones especiales:</em> {{ med.indicaciones }}
+            {% endif %}
+        </li>
     {% empty %}
         <li>No hay medicamentos registrados.</li>
     {% endfor %}
