@@ -68,10 +68,30 @@ def buscar_pacientes(request):
         #Busqueda por nombre completo, curp,telefono
         pacientes = Paciente.objects.filter( nombre__icontains=query ) | Paciente.objects.filter( apellidos__icontains=query ) | Paciente.objects.filter( curp__icontains=query ) | Paciente.objects.filter( telefono__icontains=query ) 
         for p in pacientes: #Guardamos los resultados de la busqueda
-            resultados.append({ 'id': p.id, 'nombre': f"{p.nombre} {p.apellidos}", 'curp': p.curp, 'telefono': p.telefono, }) 
+            resultados.append({
+                'id': p.id, 
+                'nombre': f"{p.nombre} {p.apellidos}", 
+                'curp': p.curp, 
+                'telefono': p.telefono, 
+            }) 
     
     return JsonResponse(resultados, safe=False)
 
+
+@login_required
+def pacientes_autocomplete(request):
+    q = request.GET.get('q', '')
+    pacientes = Paciente.objects.filter(nombre__icontains=q)[:5]  # máximo 5 sugerencias
+    results = []
+    for p in pacientes:
+        # Campos que se mostrara en la sugerencia
+        results.append({
+            "id": p.id,
+            "nombre": f"{p.nombre} {p.apellidos}",
+            'curp':p.curp,
+            "telefono": p.telefono,
+        })
+    return JsonResponse(results, safe=False)
 
 #Es la pantalla "principal" al entrar al expediente. Es el que muesyta las notas medicas
 @login_required
@@ -128,7 +148,6 @@ def expediente_vacunas(request, paciente_id):
 @login_required 
 def crear_nota_medica(request, paciente_id): #Mismo argumento que esta en urls.py
     paciente = get_object_or_404(Paciente, id=paciente_id)  
-    
     
     #---GRUPO DE FORMULARIOS---
     #Solo un formulario por defecto se muestra
@@ -202,3 +221,19 @@ def crear_nota_medica(request, paciente_id): #Mismo argumento que esta en urls.p
     
     #Mostrar crear_nota_medica.html
     return render(request, 'clinica/crear_nota_medica.html', { 'nota_form': nota_form, 'medicamento_formset': medicamento_formset, 'vacuna_formset': vacuna_formset, 'paciente': paciente, })
+
+
+
+@login_required
+def pacientes_autocomplete(request):
+    q = request.GET.get('q', '')
+    pacientes = Paciente.objects.filter(nombre__icontains=q)[:5]  # máximo 5 sugerencias
+    results = []
+    for p in pacientes:
+        #Campos que se mostrara en la sugerencia 
+        results.append({
+            "id": p.id,
+            "nombre": f"{p.nombre} {p.apellidos}",
+            "telefono": p.telefono,
+        })
+    return JsonResponse(results, safe=False)

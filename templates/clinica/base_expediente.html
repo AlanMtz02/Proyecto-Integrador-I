@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Expediente</title>
-</head>
-<body>
+    
     <h2>Expediente de {{ paciente.nombre }} {{ paciente.apellidos }}</h2>
     <p><strong>CURP:</strong> {{ paciente.curp }}</p>
     <p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
@@ -21,16 +20,20 @@
       <p><strong>Última actualización:</strong> {{ ultima_nota.fecha_hora }}</p>
     {% else %}<!--No hay else, ya que se pone -- si no hay nada -->
     {% endif %}
-    <!--Boton crear nota medica-->
+        <!--Boton crear nota medica-->
     <a href="{% url 'crear_nota_medica' paciente.id %}">+ Nueva Nota Médica</a>
 
-    <ul>
-        <li><a href="{% url 'expediente_notas' paciente.id %}">Notas Médicas</a></li>
-        <li><a href="{% url 'expediente_medicamentos' paciente.id %}">Medicamentos</a></li>
-        <li><a href="{% url 'expediente_vacunas' paciente.id %}">Vacunación</a></li>
+        <ul>
+            <li><a href="{% url 'expediente_notas' paciente.id %}">Notas Médicas</a></li>
+            <li><a href="{% url 'expediente_medicamentos' paciente.id %}">Medicamentos</a></li>
+            <li><a href="{% url 'expediente_vacunas' paciente.id %}">Vacunación</a></li>
     </ul>
+
+</head>
+<body>
 
     {% block content %}
     {% endblock %}
+    
 </body>
 </html>

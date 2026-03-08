@@ -12,14 +12,12 @@
 
 
 <!-- Buscador -->
-<form method="get">
-    <input type="text" name="q" placeholder="Buscar pacientes..." value="{{ query }}"><!--Es el valor que recibe la vista listapacientes.-->
-    <button type="submit">Buscar</button>
+<form method="get" onsubmit="return false;"><!-- prevenimos submit para usar filtrado en vivo -->
+    <input type="text" id="paciente-search" placeholder="Buscar pacientes...">
 </form>
 
-
 <!-- Tabla de pacientes -->
-<table>
+<table id="pacientes-table">
     <thead>
         <tr>
             <th>Paciente</th>
@@ -31,7 +29,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for paciente in pacientes %}<!--Iterar sobre pacientes-->
+        {% for paciente in pacientes %}
         <tr>
             <td>{{ paciente.nombre }} {{ paciente.apellidos }}</td>
             <td>{{ paciente.telefono }}</td>
@@ -39,8 +37,8 @@
             <td>{{ paciente.tipo_sangre }}</td>
             <td>{{ paciente.alergias|default:"Ninguna" }}</td>
             <td>
-                <a href="{% url 'editar_paciente' paciente.id %}">Editar</a><!--Esta en urls.py-->
-                <a href="{% url 'eliminar_paciente' paciente.id %}">Eliminar</a><!--Esta en urls.py-->
+                <a href="{% url 'editar_paciente' paciente.id %}">Editar</a>
+                <a href="{% url 'eliminar_paciente' paciente.id %}">Eliminar</a>
             </td>
         </tr>
         {% empty %}
@@ -51,6 +49,51 @@
     </tbody>
 </table>
 
+<div id="no-results" style="display:none; color:red; font-weight:bold;">
+    No se encontraron coincidencias.
+</div>
 
+<script>
+    const searchInput = document.getElementById('paciente-search');
+    const table = document.getElementById('pacientes-table');
+    const rows = table.getElementsByTagName('tr');
+    const noResults = document.getElementById('no-results');
+
+    searchInput.addEventListener('keyup', function() {
+        const query = this.value.toLowerCase();
+        let matches = 0; // contador de coincidencias
+
+        for (let i = 1; i < rows.length; i++) { // saltamos encabezado
+            const row = rows[i];
+            const text = row.textContent.toLowerCase();
+
+            if (query === '') {//Campo vacio
+                row.style.display = '';
+                row.classList.remove('highlight');//Sin estilos
+                matches++; // todas cuentan si está vacío
+            } else if (text.includes(query)) {//Hay coincidencia
+                row.style.display = '';
+                row.classList.add('highlight');//agregar estilos
+                matches++;
+            } else {//No hay coincidencia
+                row.style.display = 'none';
+                row.classList.remove('highlight');
+            }
+        }
+
+        // Mostrar/ocultar mensaje según coincidencias
+        if (query !== '' && matches === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
+    });
+</script>
+
+<style>
+    .highlight {
+        background-color: lightblue;
+    }
+</style>
 </body>
 </html>

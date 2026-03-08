@@ -11,6 +11,7 @@ urlpatterns = [
     # Expediente 
     path('expediente/', views.expediente_buscar, name='expediente_buscar'), 
     path('expediente/buscar/', views.buscar_pacientes, name='buscar_pacientes'), 
+    path('pacientes/autocomplete/', views.pacientes_autocomplete, name='pacientes_autocomplete'),#en el CRUD
     path('expediente/<int:paciente_id>/medicamentos/', views.expediente_medicamentos, name='expediente_medicamentos'), 
     path('expediente/<int:paciente_id>/vacunas/', views.expediente_vacunas, name='expediente_vacunas'),
     path('expediente/<int:paciente_id>/notas/', views.expediente_notas, name='expediente_notas'),#Es la que se abre por defecto. Pantalla "principal" de expediente

@@ -11,27 +11,46 @@
     <p>Busque un paciente por nombre, CURP o teléfono para acceder a su historial médico completo.</p>
 
     <input type="text" id="buscador" placeholder="Buscar paciente (Ej. Juan Pérez, P-123...)">
-    <ul id="resultados"></ul><!--Aqui se van mostrando los resultados-->
+    <ul id="resultados">
+
+    </ul><!--Aqui se van mostrando los resultados-->
+
+    <div id="no-results" style="display:none; color:red; font-weight:bold;">
+    No se encontraron coincidencias.
+    </div>
     <a href="{% url 'lista_pacientes' %}">Menu: Pacientes</a>
 
-<script>
-    //Obtener el input 
+
+    <script>
     document.getElementById('buscador').addEventListener('keyup', function() {
-    let query = this.value;//Obtener lo que se escribio en el input 
-    if (query.length > 2) {  // empieza a buscar a partir de 3 caracteres
-        fetch(`/expediente/buscar/?q=${query}`)
-            .then(response => response.json())
-            .then(data => {
-                let lista = document.getElementById('resultados');//Obtener el ul donde se muestran los resultados
-                lista.innerHTML = '';
-                data.forEach(p => {
-                    let item = document.createElement('li');//Se crean un li para cada item
-                    item.innerHTML = `<a href="/expediente/${p.id}/notas/">${p.nombre} - ${p.curp}</a>`; //Ruta expediente_notas /expediente/<int:paciente_id>/notas/
-                    lista.appendChild(item);
+        let query = this.value;
+        if (query.length > 3) {  // empieza a buscar a partir de 3 caracteres
+            fetch(`/expediente/buscar/?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    let lista = document.getElementById('resultados');
+                    let noResults = document.getElementById('no-results');
+                    lista.innerHTML = '';
+
+                    if (data.length === 0) {
+                        // si no hay coincidencias, mostrar mensaje
+                        noResults.style.display = 'block';
+                    } else {
+                        // ocultar mensaje y mostrar resultados
+                        noResults.style.display = 'none';
+                        data.forEach(p => {
+                            let item = document.createElement('li');
+                            item.innerHTML = `<a href="/expediente/${p.id}/notas/">${p.nombre} - ${p.curp}</a>`; //Lo que muestra la sugerencia
+                            lista.appendChild(item);
+                        });
+                    }
                 });
-            });
-    }
-});
+        } else {
+            // si el input tiene menos de 3 caracteres, limpiar resultados y ocultar mensaje
+            document.getElementById('resultados').innerHTML = '';
+            document.getElementById('no-results').style.display = 'none';
+        }
+    });
 </script>
 
     
