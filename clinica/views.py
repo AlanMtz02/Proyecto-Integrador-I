@@ -59,6 +59,8 @@ def eliminar_paciente(request, paciente_id):#Mismo argumento que esta en urls.py
 def expediente_buscar(request): 
     return render(request, 'clinica/expediente_buscar.html')
 
+
+#BUSCADOR DEL EXPEDIENTE
 @login_required
 # Vista que devuelve resultados en JSON 
 def buscar_pacientes(request): 
@@ -77,7 +79,7 @@ def buscar_pacientes(request):
     
     return JsonResponse(resultados, safe=False)
 
-
+#BUSCADOR DEL CRUD
 @login_required
 def pacientes_autocomplete(request):
     q = request.GET.get('q', '')

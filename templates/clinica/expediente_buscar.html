@@ -1,27 +1,21 @@
-<!--Recibe -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Expediente Clínico</h2>
-    <p>Busque un paciente por nombre, CURP o teléfono para acceder a su historial médico completo.</p>
+{% extends 'clinica/base.html' %}
+{% block title %}Buscador de expediente{% endblock%}
 
-    <input type="text" id="buscador" placeholder="Buscar paciente (Ej. Juan Pérez, P-123...)">
-    <ul id="resultados">
+{% block content %}
+<h2>Expediente Clínico</h2>
+<p>Busque un paciente por nombre, CURP o teléfono para acceder a su historial médico completo.</p>
 
-    </ul><!--Aqui se van mostrando los resultados-->
+ <input type="text" id="buscador" placeholder="Buscar paciente (Ej. Juan Pérez, P-123...)">
 
-    <div id="no-results" style="display:none; color:red; font-weight:bold;">
+<ul id="resultados"><!--Aqui se van mostrando los resultados-->
+</ul>
+
+<div id="no-results" style="display:none; color:red; font-weight:bold;">
     No se encontraron coincidencias.
-    </div>
-    <a href="{% url 'lista_pacientes' %}">Menu: Pacientes</a>
+</div>
 
 
-    <script>
+<script>
     document.getElementById('buscador').addEventListener('keyup', function() {
         let query = this.value;
         if (query.length > 3) {  // empieza a buscar a partir de 3 caracteres
@@ -53,6 +47,4 @@
     });
 </script>
 
-    
-</body>
-</html>
+{% endblock %} 

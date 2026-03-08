@@ -1,22 +1,14 @@
+{% extends 'clinica/base.html' %} <!--Extiende de la base.html-->
 <!--Recibe la variable pacientes,query.Ademas tiene acceso a la variable user que es el que esta logueado-->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Pacientes</title>
-</head>
-<body>
-    <h2>Lista de Pacientes</h2>
-    <a href="{% url 'crear_paciente' %}">+ Nuevo Paciente</a><!--Esta en urls.py-->
-    <a href="{% url 'expediente_buscar' %}">Menu: Expediente</a><!--Esta en urls.py-->
+{% block title %} Lista de pacientes {% endblock %}
+{% block content %}<!--Modificable-->
+<h2>Lista de Pacientes</h2>
+<a href="{% url 'crear_paciente' %}">+ Nuevo Paciente</a>
 
-
-<!-- Buscador -->
-<form method="get" onsubmit="return false;"><!-- prevenimos submit para usar filtrado en vivo -->
+<form method="get" onsubmit="return false;">
     <input type="text" id="paciente-search" placeholder="Buscar pacientes...">
 </form>
 
-<!-- Tabla de pacientes -->
 <table id="pacientes-table">
     <thead>
         <tr>
@@ -52,6 +44,8 @@
 <div id="no-results" style="display:none; color:red; font-weight:bold;">
     No se encontraron coincidencias.
 </div>
+{% endblock %}
+
 
 <script>
     const searchInput = document.getElementById('paciente-search');
@@ -95,5 +89,3 @@
         background-color: lightblue;
     }
 </style>
-</body>
-</html>

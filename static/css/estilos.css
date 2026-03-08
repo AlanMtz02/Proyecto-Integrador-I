@@ -1,0 +1,99 @@
+:root {
+    --primario: #3d4699;
+    --primario-boton-iconos: #4f39f6;
+    --texto-negro: #202334;
+    --texto-claro: #8d8991;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* outline: 1px solid red; */
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: #ffffff;
+    /*Fondo del header(incluye info y nav) */
+}
+
+.base_contenedor_header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.base_info h1 {
+    color: var(--primario);
+    margin-bottom: 15px;
+}
+
+.base_info p {
+    color: var(--texto-claro);
+    font-size: 18px;
+}
+
+.base_logout {
+    /*button*/
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+    padding: 12px;
+    border-radius: 6px;
+    transition: background-color 0.4s, color 0.4s;
+    text-decoration: none;
+    color: var(--texto-negro);
+    font-size: 18px;
+    
+}
+
+.base_logout:hover {
+    background-color: #f4f4f4;
+    /* gris claro para hover */
+}
+
+.base_logout i {
+    margin-right: 4px;
+}
+
+.base_flex_nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    border-bottom: 1px solid var(--texto-claro);
+    border-top: 1px solid var(--texto-claro);
+    ;
+}
+
+.base_flex_nav a {
+    flex: 1;
+    /*Cada link ocupa el mismo ancho */
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    color: var(--texto-negro);
+    transition: background-color 0.4s;
+    border-bottom: 3px solid transparent;
+    /* subrayado invisible por defecto */
+}
+
+.base_flex_nav a i {
+    margin-right: 6px;
+}
+
+.base_flex_nav a:hover {
+    background-color: #f4f4f4;
+}
+
+/* Activo */
+.base_flex_nav a.activo {
+    color: var(--primario-boton-iconos);
+    /* texto e ícono en color primario */
+    border-bottom: 2.5px solid var(--primario-boton-iconos);
+    /* subrayado */
+    font-weight: 700;
+    /* resaltar más */
+}
