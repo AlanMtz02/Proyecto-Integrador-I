@@ -11,7 +11,7 @@
     padding: 0;
     box-sizing: border-box;
     /* outline: 1px solid red; */
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 header {
@@ -20,7 +20,7 @@ header {
 }
 
 .base_contenedor_header {
-    padding: 20px;
+    padding: 16px;
     display: flex;
     justify-content: space-between;
 }
@@ -62,7 +62,7 @@ header {
 .base_flex_nav {
     display: flex;
     justify-content: space-around;
-    padding: 12px;
+    padding: 4px;
     border-bottom: 1px solid var(--texto-claro);
     border-top: 1px solid var(--texto-claro);
     ;
@@ -72,7 +72,7 @@ header {
     flex: 1;
     /*Cada link ocupa el mismo ancho */
     text-align: center;
-    padding: 12px;
+    padding: 8px;
     text-decoration: none;
     color: var(--texto-negro);
     transition: background-color 0.4s;
@@ -96,4 +96,173 @@ header {
     /* subrayado */
     font-weight: 700;
     /* resaltar más */
+}
+
+
+
+
+
+/*AQUI COMIENZA LA SECCION DE LISTA DE PACIENTES*/
+.lista_pacientes {
+    padding: 30px;
+    background-color: var(--fondo);
+}
+
+.lista_pacientes_flex_info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.lista_pacientes_flex_info h2 {
+    color: var(--texto-negro);
+    margin-bottom: 12px;
+}
+
+.lista_pacientes_flex_info p {
+    color: var(--texto-claro);
+    font-size: 18px;
+}
+
+.lista_pacientes_flex_info a {
+    text-decoration: none;
+    align-self: center;
+    padding: 12px 20px;
+    background-color: var(--primario-boton-iconos);
+    color: #ffffff;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.4s, color 0.4s;
+
+}
+
+.lista_pacientes a i {
+    margin-right: 4px;
+}
+
+.lista_pacientes_flex_info a:hover {
+    background-color: #3a2cc0;
+    /*o #6a55ff para un color mas claro*/
+}
+
+/*Tabla de pacientes*/
+.lista_pacientes_tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border: 1px solid var(--texto-claro);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    /* sombra suave */
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.lista_pacientes_tabla thead input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--texto-claro);
+    border-radius: 6px;
+}
+
+.lista_pacientes_tabla thead tr:first-child th {
+    /*Fila del buscador*/
+    padding: 20px;
+}
+
+/*Solo encabezado Paciente*/
+.lista_pacientes_tabla tr:nth-child(2) th:first-child {
+    text-align: left;
+}
+
+/*Solo nombre del paciente*/
+.lista_pacientes_tabla tr td:first-child {
+    text-align: left;
+    white-space: nowrap;
+    /*Evita que se divida en varias lineas*/
+    overflow: hidden;
+    /*oculta el texto que se desborda*/
+    text-overflow: ellipsis;
+    /*muestra ... al final*/
+    max-width: 260px;
+}
+
+/*Contacto,fecha de nacimiento,tipo sangre,acciones*/
+.lista_pacientes_tabla tr td:nth-child(2),
+.lista_pacientes_tabla tr td:nth-child(3),
+.lista_pacientes_tabla tr td:nth-child(4),
+.lista_pacientes_tabla tr td:nth-child(6) {
+    max-width: 100px;
+}
+
+/*Alergias*/
+.lista_pacientes_tabla tr td:nth-child(5) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px;
+
+}
+
+.lista_pacientes_tabla thead tr:nth-child(2) {
+    /*Fila de los encabezados*/
+    background-color: #f0f8ff;
+    text-align: center;
+    border-top: 1px solid var(--texto-claro);
+    border-bottom: 1px solid var(--texto-claro);
+}
+
+.lista_pacientes_tabla thead tr:nth-child(2) th {
+    /*Encabezados*/
+    padding: 16px;
+    color: var(--texto-negro);
+}
+
+tbody tr td {
+    /*filas de los datos*/
+    padding: 24px 16px;
+    text-align: center;
+    border-bottom: .5px solid var(--texto-claro);
+}
+
+.lista_pacientes_paciente_icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #e0deff;
+    width: 40px;
+    height: 40px;
+    margin-right: 4px;
+}
+
+.lista_pacientes_tipo_sangre {
+    background-color: #ffd6d6;
+    padding: 4px;
+    border-radius: 4px;
+    color: red;
+
+}
+
+.lista_pacientes_acciones {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Boton editar y eliminar*/
+.lista_pacientes_acciones a:first-child,
+.lista_pacientes_acciones a:nth-child(2) {
+    padding: 2px;
+    border-radius: 4px;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.lista_pacientes_acciones a:first-child:hover {
+    background-color: #e0deff;
+    ;
+}
+
+.lista_pacientes_acciones a:nth-child(2):hover {
+    background-color: #ffd6d6;
 }

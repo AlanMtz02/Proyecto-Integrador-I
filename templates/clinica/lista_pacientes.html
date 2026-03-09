@@ -2,50 +2,72 @@
 <!--Recibe la variable pacientes,query.Ademas tiene acceso a la variable user que es el que esta logueado-->
 {% block title %} Lista de pacientes {% endblock %}
 {% block content %}<!--Modificable-->
-<h2>Lista de Pacientes</h2>
-<a href="{% url 'crear_paciente' %}">+ Nuevo Paciente</a>
+    <section class="lista_pacientes">
+        <div class="lista_pacientes_flex_info">
+            <div class="lista_pacientes_info">
+                <h2>Lista de pacientes</h2>
+                <p>Administra la informacion de los pacientes</p>
+            </div>
 
-<form method="get" onsubmit="return false;">
-    <input type="text" id="paciente-search" placeholder="Buscar pacientes...">
-</form>
+            <a href="{% url 'crear_paciente' %}"><i class="fa-solid fa-plus fa-lg"></i>Nuevo paciente</a>
+        </div>
 
-<table id="pacientes-table">
-    <thead>
-        <tr>
-            <th>Paciente</th>
-            <th>Teléfono</th>
-            <th>Fecha Nac.</th>
-            <th>Tipo Sangre</th>
-            <th>Alergias</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for paciente in pacientes %}
-        <tr>
-            <td>{{ paciente.nombre }} {{ paciente.apellidos }}</td>
-            <td>{{ paciente.telefono }}</td>
-            <td>{{ paciente.fecha_nacimiento|date:"d/m/Y" }}</td>
-            <td>{{ paciente.tipo_sangre }}</td>
-            <td>{{ paciente.alergias|default:"Ninguna" }}</td>
-            <td>
-                <a href="{% url 'editar_paciente' paciente.id %}">Editar</a>
-                <a href="{% url 'eliminar_paciente' paciente.id %}">Eliminar</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="6">No se encontraron pacientes.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        <!--Tabla-->
+       <table id="pacientes-table" class="lista_pacientes_tabla">
+            <thead>
+                <tr><!--Buscador (abarca 6 filas)-->
+                    <th colspan="6">
+                        <form method="get" onsubmit="return false;">
+                            <input type="text" id="paciente-search" placeholder="Buscar pacientes...">
+                        </form>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Paciente</th>
+                    <th>Contacto</th>
+                    <th>Fecha Nac.</th>
+                    <th>Tipo sangre</th>
+                    <th>Alergias</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-<div id="no-results" style="display:none; color:red; font-weight:bold;">
-    No se encontraron coincidencias.
-</div>
-{% endblock %}
+            <tbody>
+                {%for paciente in pacientes %}<!--Iterar-->
+                <tr>
+                    <td>
+                        <span class="lista_pacientes_paciente_icono"><i class="fa-regular fa-user fa-sm" style="color: #4f39f6;"></i></span>{{ paciente.nombre }} {{ paciente.apellidos }} </td>
 
+                    <td>{{ paciente.telefono }}</td>
+
+                    <td>{{ paciente.fecha_nacimiento|date:"d/m/Y" }}</td>
+
+                    <td><span class="lista_pacientes_tipo_sangre">{{ paciente.tipo_sangre }}</span></td>
+
+                    <td>{{ paciente.alergias|default:"Ninguna" }}</td>
+
+                    <td>
+                        <div class="lista_pacientes_acciones">
+                            <!--Editar-->
+                            <a href="{% url 'editar_paciente' paciente.id %}"><i class="fa-regular fa-pen-to-square fa-xl" style="color: #4f39f6;"></i></a>
+                            <!--Eliminar-->
+                            <a href="{% url 'eliminar_paciente' paciente.id %}"><i class="fa-regular fa-trash-can fa-xl" style="color: #d50000;"></i></a>
+                        </div>
+                    </td>
+                </tr>
+
+                {% empty %}<!--Cuando no hay pacientes-->
+                <tr>
+                    <td colspan="6">No se encontraron pacientes</td><!--Abarca 6 columnas-->
+                </tr>
+                {% endfor %}
+            </tbody>
+       </table> 
+    </section>
+    <div id="no-results" style="display:none; color:red; font-weight:bold;">
+        No se encontraron coincidencias.
+    </div>
+    {% endblock %}
 
 <script>
     const searchInput = document.getElementById('paciente-search');
