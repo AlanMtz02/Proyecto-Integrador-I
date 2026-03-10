@@ -3,6 +3,7 @@
     --primario-boton-iconos: #4f39f6;
     --texto-negro: #202334;
     --texto-claro: #8d8991;
+    --fondo:#f0f2ff;
 
 }
 
@@ -65,7 +66,7 @@ header {
     padding: 4px;
     border-bottom: 1px solid var(--texto-claro);
     border-top: 1px solid var(--texto-claro);
-    ;
+
 }
 
 .base_flex_nav a {
@@ -133,6 +134,7 @@ header {
     border-radius: 8px;
     font-weight: bold;
     transition: background-color 0.4s, color 0.4s;
+    cursor: pointer;
 
 }
 
@@ -183,7 +185,7 @@ header {
     /*oculta el texto que se desborda*/
     text-overflow: ellipsis;
     /*muestra ... al final*/
-    max-width: 260px;
+    max-width: 200px;
 }
 
 /*Contacto,fecha de nacimiento,tipo sangre,acciones*/
@@ -266,3 +268,123 @@ tbody tr td {
 .lista_pacientes_acciones a:nth-child(2):hover {
     background-color: #ffd6d6;
 }
+
+/*Resalta la coincidencia*/
+.highlight {
+    background-color: lightblue;
+}
+
+
+
+
+
+
+
+/*AQUI COMIENZA LA SECCION DE CREAR PACIENTE*/
+.crear_paciente{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background-color: var(--fondo);
+    padding: 30px;
+   
+}
+
+/*Card donde van los campos*/
+.crear_paciente_card{
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid var(--texto-claro);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    /*colocar un width*/
+    width: 1200px;
+    border-radius: 12px;
+}
+
+.crear_paciente_card h2{
+    color:var(--texto-negro);
+    margin-bottom: 15px;
+}
+
+.crear_paciente_form_row{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+/*div que contiene el texto y campo.*/
+.crear_paciente_form_group{
+    flex: 1;
+}
+
+/*El campo (la clase esta en forms.py)*/
+.crear_paciente_form_control{
+    width: 100%; /*Se estira todo el ancho disponible*/
+    padding: 8px;
+    border: 1px solid var(--texto-claro);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;/*Trancision del borde*/
+    margin-top: 4px;
+}
+
+/*Al presionar el campo*/
+.crear_paciente_form_control:focus{
+    border-color: var(--primario-boton-iconos);
+    outline: none;
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
+}
+
+.crear_paciente_form_row.crear_paciente_full_width{
+    display: block; /*Rompe el flex*/
+    margin-bottom: 15px;
+}
+
+/*Campo direccion*/
+.crear_paciente_form_control.direccion-input{
+    width: 100%;
+    resize: none;
+
+}
+
+.crear_paciente_form_actions{
+    display: flex;
+    justify-content: flex-end;
+    gap:20px
+}
+
+.crear_paciente_btn_cancelar{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 1px solid var(--texto-claro);
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.crear_paciente_btn_guardar{
+    text-decoration: none;
+    cursor: pointer;
+    background-color: var(--primario-boton-iconos);
+    border-radius: 6px;
+    padding: 10px 20px;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.crear_paciente_btn_cancelar:hover{
+    background-color: #d2d2d2;
+
+}
+
+.crear_paciente_btn_guardar:hover{
+    background-color: #3a2cc0;
+
+}
+

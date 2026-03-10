@@ -1,6 +1,9 @@
 from django import forms
 from .models import Paciente,NotaMedica,Medicamento,Vacuna
 
+
+#LOS CAMPOS DEBEN SER IGUALES AL DE models.py
+
 class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
@@ -8,7 +11,66 @@ class PacienteForm(forms.ModelForm):
         exclude=['es_activo']
         
         #Forzar al campo fecha_nacimiento para que sea tipo calendario
-        widgets = {'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}), }
+        widgets = {
+            'nombre':forms.TextInput(attrs={
+                'class': 'crear_paciente_form_control',
+                'placeholder':'Nombre del paciente'
+            }),
+            
+            
+            'apellidos':forms.TextInput(attrs={
+                'class':'crear_paciente_form_control',
+                'placeholder':'Apellidos del paciente'                
+            }),
+            
+            
+            #SELECT porque son opciones predefinidas (vienen de models.py)
+            'genero':forms.Select(attrs={
+                'class':'crear_paciente_form_control'
+                
+            }),
+            
+            
+            'curp':forms.TextInput(attrs={
+                'class':'crear_paciente_form_control',
+                'placeholder':'CURP del paciente'
+            }),
+            
+            
+            'telefono':forms.TextInput(attrs={
+                'class':'crear_paciente_form_control',
+                'placeholder':'Teléfono del paciente'
+            }),
+            
+            
+            #SELECT porque son opciones predefinidas
+            'tipo_sangre':forms.Select(attrs={
+                'class':'crear_paciente_form_control',
+            }),
+            
+            
+            #type: date para que aparezca el calendario
+            'fecha_nacimiento': forms.DateInput(attrs={
+                'class': 'crear_paciente_form_control',
+                'type': 'date'
+            }), 
+            
+            
+            'alergias':forms.TextInput(attrs={
+                'class':'crear_paciente_form_control',
+                'placeholder':'Ej. Penicilina,Polen'
+            }),
+            
+            
+            #Direccion abarca todo el ancho y es mas grande
+            'direccion':forms.Textarea(attrs={
+                'class':'crear_paciente_form_control direccion-input',
+                'placeholder':'Dirección del paciente',
+                'rows':2,
+                
+            })
+            
+            }
         
 
 # ------------------------- # Formulario de Nota Médica # ------------------------- 

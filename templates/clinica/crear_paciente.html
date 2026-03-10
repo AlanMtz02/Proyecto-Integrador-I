@@ -1,19 +1,88 @@
 <!--Recibe la variable form (que es la que tiene o pide todos los campos de paciente)-->
 <!--'nombre': forms.TextInput(attrs={'class': 'campo-nombre'}),-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Nuevo Paciente</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}<!--Estos son los campos-->
-    <button type="submit">Guardar</button>
-    </form>
-    <a href="{% url 'lista_pacientes' %}">Cancelar</a>   
-</body>
-</html>
+{% extends 'clinica/base.html' %}
+{% block title %} Crear paciente {% endblock %}
+
+{% block content %}
+    <section class="crear_paciente">
+        <div class="crear_paciente_card">
+            <h2>Nuevo paciente</h2>
+            <form method="post">
+                {% csrf_token %}
+
+                <!--Primera fila-->
+                <div class="crear_paciente_form_row">
+
+                    <div class="crear_paciente_form_group">
+                        <p>Nombre(s)</p>
+                        {{ form.nombre }}
+                    </div>
+
+                    <div class="crear_paciente_form_group">
+                        <p>Apellidos</p>
+                        {{ form.apellidos }}
+                    </div>
+
+                </div>
+
+                <!--Segunda fila-->
+                <div class="crear_paciente_form_row">
+                    <div class="crear_paciente_form_group">
+                        <p>CURP</p>
+                        {{ form.curp }}
+                    </div>
+
+                    <div class="crear_paciente_form_group">
+                        <p>Género</p>
+                        {{ form.genero }}
+                    </div>
+                </div>
+
+                <!--Tercera fila-->
+                <div class="crear_paciente_form_row">
+                    <div class="crear_paciente_form_group">
+                        <p>Télefono</p>
+                        {{ form.telefono }}
+                    </div>
+
+                    <div class="crear_paciente_form_group">
+                        <p>Tipo de sangre</p>
+                        {{ form.tipo_sangre }}
+                    </div>
+                </div>
+
+                <!--Cuarta fila-->
+                <div class="crear_paciente_form_row">
+                    <div class="crear_paciente_form_group">
+                        <p>Fecha de nacimiento</p>
+                        {{ form.fecha_nacimiento }}
+                    </div>
+
+                    <div class="crear_paciente_form_group">
+                        <p>Alergias</p>
+                        {{ form.alergias }}
+                    </div>
+                </div>
+
+                <!--Quinta fila (Solo 1 campo que abarca todo el ancho)-->
+                <div class="crear_paciente_form_row crear_paciente_full_width">
+                    <div class="crear_paciente_form_group">
+                        <p>Dirección</p>
+                        {{ form.direccion }}
+                    </div>
+                </div>
+
+                <div class="crear_paciente_form_actions">
+                    <a class="crear_paciente_btn_cancelar" href="{% url 'lista_pacientes' %}">Cancelar</a> 
+                    <button class="crear_paciente_btn_guardar" type="submit">Guardar</button>
+                </div>
+
+            </form>
+
+        </div>
+    </section>
+    
+
+
+
+{% endblock %}
