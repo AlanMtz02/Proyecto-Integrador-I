@@ -275,6 +275,64 @@ tbody tr td {
 }
 
 
+/*ESTILOS DEL MODAL PARA ELIMINAR PACIENTE*/
+.lista_pacientes_modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.lista_pacientes_modal_content {
+    background: #fff;
+    border-radius: 8px;
+    width: 320px;
+    height: 120px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.lista_pacientes_modal_flex_actions{
+    display: flex;
+    gap:20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.lista_pacientes_btnmodal_eliminar {
+    background-color: #d50000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.lista_pacientes_btnmodal_cancelar {
+    background-color: #ffffff;
+    color: black;
+    border: 1px solid var(--texto-claro);
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.lista_pacientes_btnmodal_eliminar:hover{
+    background-color: #ab0e0e;
+
+}
+
+.lista_pacientes_btnmodal_cancelar:hover {
+    background-color:#d2d2d2 ;
+}
+
 
 
 

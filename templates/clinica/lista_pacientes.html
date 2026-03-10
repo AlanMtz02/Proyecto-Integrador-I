@@ -50,8 +50,10 @@
                         <div class="lista_pacientes_acciones">
                             <!--Editar-->
                             <a href="{% url 'editar_paciente' paciente.id %}"><i class="fa-regular fa-pen-to-square fa-xl" style="color: #4f39f6;"></i></a>
+
                             <!--Eliminar-->
-                            <a href="{% url 'eliminar_paciente' paciente.id %}"><i class="fa-regular fa-trash-can fa-xl" style="color: #d50000;"></i></a>
+                            <!--{% url 'eliminar_paciente' paciente.id %}-->
+                            <a href="#" onclick="openDeleteModal({{ paciente.id }}); return false;"><i class="fa-regular fa-trash-can fa-xl" style="color: #d50000;"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -64,11 +66,32 @@
             </tbody>
        </table> 
     </section>
+
+    <!--Resultados del buscador cuando no encuentra nada-->
     <div id="no-results" style="display:none; color:red; font-weight:bold;">
         No se encontraron coincidencias.
     </div>
 
+
+    <!--Modal para eliminar-->
+    <div id="deleteModal" class="lista_pacientes_modal">
+        <div class="lista_pacientes_modal_content">
+            <h3>¿Eliminar paciente?</h3>
+            <p>Esta acción no se puede deshacer.</p>
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <div class="lista_pacientes_modal_flex_actions">
+                    <button type="button" class="lista_pacientes_btnmodal_cancelar" onclick="closeDeleteModal()">Cancelar</button>
+                    <button type="submit" class="lista_pacientes_btnmodal_eliminar">Eliminar</button>
+
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
 <script>
+    //Buscador
     const searchInput = document.getElementById('paciente-search');
     const table = document.getElementById('pacientes-table');
     const rows = table.getElementsByTagName('tr');
@@ -103,6 +126,22 @@
             noResults.style.display = 'none';
         }
     });
+
+
+    //Modal
+    //Abrir modal
+    function openDeleteModal(pacienteId) {
+        const modal = document.getElementById('deleteModal');
+        const form = document.getElementById('deleteForm');
+        form.action = `/pacientes/${pacienteId}/eliminar/`; // tu URL de eliminar
+        modal.style.display = 'flex';
+    }
+
+    //Cerrar modal
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
 </script>
 
 
