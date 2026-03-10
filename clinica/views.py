@@ -37,6 +37,7 @@ def editar_paciente(request, paciente_id):#Requiere de parametro en la url.Es la
     paciente = get_object_or_404(Paciente, id=paciente_id)
     if request.method == 'POST':
         form = PacienteForm(request.POST, instance=paciente)
+        form.fields['fecha_nacimiento'].input_formats = ['%Y-%m-%d'] #formato que esta en forms.py
         if form.is_valid():
             form.save()
             return redirect('lista_pacientes')

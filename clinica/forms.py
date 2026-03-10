@@ -52,8 +52,10 @@ class PacienteForm(forms.ModelForm):
             #type: date para que aparezca el calendario
             'fecha_nacimiento': forms.DateInput(attrs={
                 'class': 'crear_paciente_form_control',
-                'type': 'date'
-            }), 
+                'type': 'date',
+            },
+                format='%Y-%m-%d'  # formato que entiende el input type="date"
+            ), 
             
             
             'alergias':forms.TextInput(attrs={
