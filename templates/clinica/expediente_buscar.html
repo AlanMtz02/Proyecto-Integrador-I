@@ -2,23 +2,34 @@
 {% block title %}Buscador de expediente{% endblock%}
 
 {% block content %}
-<h2>Expediente Clínico</h2>
-<p>Busque un paciente por nombre, CURP o teléfono para acceder a su historial médico completo.</p>
+<section class="expediente_buscar">
+    <div class="expediente_buscar_card">
 
- <input type="text" id="buscador" placeholder="Buscar paciente (Ej. Juan Pérez, P-123...)">
+        <div class="expediente_buscar_card_info">
+            <div class="expediente_buscar_icon">
+                <i class="fa-regular fa-file-lines" style="color: #4f39f6;"></i>
+            </div>
+            <h2>Expediente clínico</h2>
+            <p>Busque un paciente por nombre, CURP o teléfono para acceder a su historial médico completo.</p>
+        </div>
 
-<ul id="resultados"><!--Aqui se van mostrando los resultados-->
-</ul>
+        <input type="text" id="buscador" class="expediente_buscar_input" placeholder="Buscar paciente (Ej. Juan Pérez...)">
 
-<div id="no-results" style="display:none; color:red; font-weight:bold;">
-    No se encontraron coincidencias.
-</div>
+        <!-- Resultados -->
+        <ul id="resultados" class="expediente_buscar_resultados"><!--Aqui se van mostrando los resultados--></ul>
 
+        <!-- Mensaje sin resultados -->
+        <div id="no-results" class="expediente_buscar_noresult">
+            <i class="fa-regular fa-user fa-xl" style="color: #8d8991;"></i>
+            <p>No se encontraron coincidencias.</p>
+        </div>
+    </div>
+</section>
 
 <script>
     document.getElementById('buscador').addEventListener('keyup', function() {
         let query = this.value;
-        if (query.length > 3) {  // empieza a buscar a partir de 3 caracteres
+        if (query.length > 3) {
             fetch(`/expediente/buscar/?q=${query}`)
                 .then(response => response.json())
                 .then(data => {
@@ -26,25 +37,36 @@
                     let noResults = document.getElementById('no-results');
                     lista.innerHTML = '';
 
-                    if (data.length === 0) {
-                        // si no hay coincidencias, mostrar mensaje
+                    if (Array.isArray(data) && data.length === 0) {
                         noResults.style.display = 'block';
                     } else {
-                        // ocultar mensaje y mostrar resultados
+                        lista.innerHTML='';
                         noResults.style.display = 'none';
                         data.forEach(p => {
+                            const partes = p.nombre.trim().split(" ");
+                            const iniciales = partes[0].charAt(0).toUpperCase() + (partes[1] ? partes[1].charAt(0).toUpperCase() : '');
                             let item = document.createElement('li');
-                            item.innerHTML = `<a href="/expediente/${p.id}/notas/">${p.nombre} - ${p.curp}</a>`; //Lo que muestra la sugerencia
+                            item.innerHTML = `
+                                <a href="/expediente/${p.id}/notas/">
+                                    <div class="expediente_buscar_resultado_item">
+                                        <div class="expediente_buscar_resultado_icon">${iniciales}</div>
+                                        <div class="expediente_buscar_resultado_info">
+                                            <strong>${p.nombre}</strong>
+                                            <span>CURP: ${p.curp} • ${p.telefono || ''}</span>
+                                        </div>
+                                        <div class="expediente_buscar_resultado_arrow">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </a>`;
                             lista.appendChild(item);
                         });
                     }
                 });
         } else {
-            // si el input tiene menos de 3 caracteres, limpiar resultados y ocultar mensaje
             document.getElementById('resultados').innerHTML = '';
             document.getElementById('no-results').style.display = 'none';
         }
     });
 </script>
-
-{% endblock %} 
+{% endblock %}

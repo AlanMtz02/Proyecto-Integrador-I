@@ -107,6 +107,8 @@ header {
 .lista_pacientes {
     padding: 30px;
     background-color: var(--fondo);
+    min-height: 100vh;/* ocupa toda la altura de la ventana */
+    width: 100%;/* ocupa todo el ancho */
 }
 
 .lista_pacientes_flex_info {
@@ -446,3 +448,192 @@ tbody tr td {
 
 }
 
+
+
+
+/*AQUI COMIENZA LA SECCION DE BUSCADOR EXPEDIENTE*/
+.expediente_buscar{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: var(--fondo);
+    padding-top: 60px;
+    min-height: 100vh;/* ocupa toda la altura de la ventana */
+    width: 100%;/* ocupa todo el ancho */
+}
+
+.expediente_buscar_card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 600px;
+}
+
+.expediente_buscar_card_info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    width: 500px;
+}
+
+.expediente_buscar_icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #e0deff;
+    width: 80px;
+    height: 80px;
+}
+
+.expediente_buscar_icon i{
+    font-size: 50px;
+}
+.expediente_buscar_card h2{
+    color: var(--texto-negro);
+    font-size: 36px;
+}
+
+.expediente_buscar_card p{
+    color:var(--texto-claro);
+    font-size: 20px;
+}
+
+.expediente_buscar_input{
+    width: 100%;
+    padding: 14px 10px;
+    border: 1px solid var(--texto-claro);
+    border-radius: 6px;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.expediente_buscar_input:focus{
+    outline: none;
+    border-color: var(--primario-boton-iconos);
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
+}
+
+
+
+/*Estilos para resultados*/
+.expediente_buscar_resultados {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    width: 100%;
+}
+
+.expediente_buscar_resultados li {
+    margin-bottom: 10px;
+    width: 100%;
+    border: 1px solid var(--texto-claro);
+    border-radius: 6px;
+}
+
+.expediente_buscar_resultados a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.expediente_buscar_resultado_item {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.expediente_buscar_resultado_item:hover {
+    background: #f0f0ff;
+}
+
+.expediente_buscar_resultado_icon {
+    background: #4f39f6;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+}
+
+.expediente_buscar_resultado_info {
+    flex: 1;
+}
+
+.expediente_buscar_resultado_info strong {
+    display: block;
+    font-size: 15px;
+    color: #333;
+}
+
+.expediente_buscar_resultado_info span {
+    font-size: 13px;
+    color: #666;
+}
+
+.expediente_buscar_resultado_arrow {
+    color: #999;
+}
+
+.expediente_buscar_noresult{
+    display: none;
+    background-color:#f9f9f9;
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid var(--texto-claro);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+.expediente_buscar_noresult p{
+    margin-top: 10px;
+}
+
+
+
+/* 
+.expediente_buscar_con_resultados li{
+    list-style: none;
+}
+
+.expediente_buscar_con_resultados_flex{
+    display: flex;
+    gap:10px
+}
+
+.expediente_buscar_con_resultados_icono_flecha{
+    align-self: center;
+}
+
+.expediente_buscar_con_resultados_icono_paciente{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    border-radius: 50%;
+    background-color: #e0deff ;
+    width: 40px;
+    height: 40px;
+}
+
+.expediente_buscar_con_resultados_flex_info p:first-child{
+    color: black;
+    font-weight: 600;
+}
+
+.expediente_buscar_con_resultados_flex_info p:nth-child(2){
+    font-size: 14px;
+    color: var(--texto-claro);
+    letter-spacing: 1.5px;
+} */
