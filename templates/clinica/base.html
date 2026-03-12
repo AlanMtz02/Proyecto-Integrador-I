@@ -42,17 +42,20 @@
         <!--Menus(se coloca la clase activo dependiendo del menu donde este)--> 
         <!-- request.resolver_match.url_name da el nombre de la vista actual. -->
          <!--Menu pacientes: lista_pacientes, crear_paciente,editar_paciente,eliminar_paciente-->
+         <!--Menu expediente: expediente_notas,expediente_buscar,expediente_medicamentos,expediente_vacunas *AGREGAR PARA NUEVA NOTA MEDICA-->
         <nav class="base_flex_nav">
-            <a href="{% url 'lista_pacientes' %}" class="{% if request.resolver_match.url_name in 'lista_pacientes crear_paciente editar_paciente eliminar_paciente' %}activo{% endif %}">
+            <a href="{% url 'lista_pacientes' %}" 
+            class="{% if request.resolver_match.url_name in 'lista_pacientes crear_paciente editar_paciente eliminar_paciente' %}activo{% endif %}">
                 <i class="fa-regular fa-user fa-lg"></i> 
                 Pacientes
             </a>
 
-            <a href="{% url 'expediente_buscar' %}" class="{% if request.resolver_match.url_name == 'expediente_buscar' %}activo{% endif %}">
-            <i class="fa-regular fa-file-lines fa-lg"></i> 
-            Expediente
-    </a>
-</nav>
+            <a href="{% url 'expediente_buscar' %}" 
+            class="{% if request.resolver_match.url_name in 'expediente_buscar expediente_notas expediente_medicamentos expediente_vacunas' %}activo{% endif %}">
+                <i class="fa-regular fa-file-lines fa-lg"></i> 
+                Expediente
+            </a>
+        </nav>
     </header>
 
     {% block content %}{% endblock %}

@@ -15,6 +15,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/*BASE.HTML*/
 header {
     background-color: #ffffff;
     /*Fondo del header(incluye info y nav) */
@@ -602,38 +603,325 @@ tbody tr td {
 
 
 
-/* 
-.expediente_buscar_con_resultados li{
-    list-style: none;
-}
 
-.expediente_buscar_con_resultados_flex{
+
+
+
+
+
+
+
+/*AQUI COMIENZA LA SECCION DE BASE_EXPEDIENTE*/
+.base_expediente {
+    background-color: var(--fondo);
+    width: 100%;
+    padding:30px;
     display: flex;
-    gap:10px
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.expediente_buscar_con_resultados_icono_flecha{
-    align-self: center;
+.base_expediente_header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border-bottom: 1px solid var(--texto-claro);
+    padding: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+    width: 100%;
+    position: sticky;/* se queda fijo mientras haces scroll */
+    top: 0;/* pegado al borde superior */
+    z-index: 1000;/* que quede por encima del resto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);/*Sombra fuerte*/
 }
 
-.expediente_buscar_con_resultados_icono_paciente{
+.base_expediente_back{
+    text-decoration: none;
+    color: var(--texto-claro);
     display: flex;
     align-items: center;
-    justify-content: center;
-    align-self: center;
-    border-radius: 50%;
-    background-color: #e0deff ;
-    width: 40px;
-    height: 40px;
+    gap:10px;
+    font-weight: 500;
+    transition: background 0.4s;
+    padding: 6px;
+    border-radius: 6px;
 }
 
-.expediente_buscar_con_resultados_flex_info p:first-child{
-    color: black;
+.base_expediente_back:hover{
+    background-color:#f4f4f4 ;
+
+}
+
+.base_expediente_header_texto{
+    color: var(--texto-claro);
+}
+
+.base_expediente_header_texto span{
+    color: var(--texto-negro);
     font-weight: 600;
 }
 
-.expediente_buscar_con_resultados_flex_info p:nth-child(2){
+
+.base_expediente_card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 6px;
+    border:1px sold var(--texto-claro);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.base_expediente_card_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+
+}
+
+.base_expediente_card_perfil{
+    display: flex;
+    gap:20px
+}
+
+.base_expediente_card_header_avatar {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primario-boton-iconos);
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
+}
+
+.base_expediente_card_header_info{
+    align-self: center;
+}
+
+.base_expediente_card_header_info h2{
+    color:var(--texto-negro);
+    margin-bottom: 8px;
+}
+
+.base_expediente_card_header_info_adicional{
+    display: flex;
+    gap: 15px;
+}
+
+.base_expediente_card_header_info_adicional span:first-child{
+    background-color: #f9f9f9;
+    letter-spacing: 1.2px;
+    font-size: 10px;
+    padding: 6px;
+    border:1px solid var(--texto-claro);
+    border-radius: 10px;
+}
+
+.base_expediente_card_header_info_adicional span:nth-child(2),
+.base_expediente_card_header_info_adicional span:nth-child(3){
+    font-size: 16px;
+    color:var(--texto-claro);
+}
+
+.base_expediente_card_header_alergia_tag{
+    background-color:#ffd6d6 ;
+    display: inline-block;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid #d32f2f;
+    color: #d32f2f;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px;
+}
+
+.base_expediente_card_header_sinalergia_tag{
+    background-color: #dcffd6;
+    display: inline-block;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid #53d32f;
+    color: #53d32f;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px;
+
+}
+
+.base_expediente_card_header_actions{
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.base_expediente_card_header_actions a{
+    text-decoration: none;
+    align-self: flex-end;
+    padding: 12px 20px;
+    background-color: var(--primario-boton-iconos);
+    color: #ffffff;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.4s, color 0.4s;
+    cursor: pointer;
+}
+
+.base_expediente_card_header_actions a:hover{
+    background-color: #3a2cc0;
+
+}
+
+.base_expediente_card_header_actions p{
+    color:var(--texto-claro);
     font-size: 14px;
-    color: var(--texto-claro);
-    letter-spacing: 1.5px;
-} */
+}
+
+.base_expediente_card_vitals_flex{
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.base_expediente_card_vitals{
+    background-color: #ffffff;
+    border: 1px solid var(--texto-claro);
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
+    flex: 1;
+}
+
+.base_expediente_card_vitals_titulo{
+    color:var(--texto-claro);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.base_expediente_card_vitals_valor{
+    color:var(--texto-negro);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.base_expediente_nav{
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--texto-claro);
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 30px;
+}
+
+.base_expediente_nav a{
+    flex: 1;
+    text-align: center;
+    padding: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    color:var(--texto-negro);
+    transition: background-color 0.4s, color 0.4s;
+    border-radius: 6px;
+    
+}
+
+.base_expediente_nav a:hover{
+    background-color: #d2d2d2;
+
+}
+
+.base_expediente_nav a.base_expediente_nav_activo{
+    color: var(--primario-boton-iconos);
+    background-color: #dcd9ff;
+    font-weight: 600;
+}
+
+.base_expediente_nav_activo a.base_expediente_nav_activo i{
+    color: var(--primario-boton-iconos);
+}
+
+
+
+
+
+
+
+
+
+
+
+/*AQUI COMIENZA LA SECCION DE NOTAS MEDICAS*/
+.base_expediente_notas_medicas{
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*AQUI COMIENZA LA SECCION DE MEDICAMENTOS*/
+.base_expediente_medicamentos{
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*AQUI COMIENZA LA SECCION VACUNAS*/
+.base_expediente_vacunas{
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

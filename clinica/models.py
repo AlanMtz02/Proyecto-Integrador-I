@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import date
 
 #clinica_paciente
 class Paciente(models.Model):
@@ -37,7 +38,14 @@ class Paciente(models.Model):
     def __str__(self):
         return f"{self.nombre} {self.apellidos} (ID: {self.id})"
 
-
+    #Funcion que calcula la edad automaticamente. En los html se debe llamar como .edad
+    @property
+    def edad(self):
+        today = date.today()
+        return today.year - self.fecha_nacimiento.year - (
+            (today.month, today.day) < (
+                self.fecha_nacimiento.month, self.fecha_nacimiento.day)
+        )
 #clinica_notamedica
 class NotaMedica(models.Model):
     #Opciones para la consulta

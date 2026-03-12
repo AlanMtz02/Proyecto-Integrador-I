@@ -1,39 +1,142 @@
 <!--Tiene acceso a las variables que reciben sus hijos (lo que extiendan de él)-->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Expediente</title>
+{% extends 'clinica/base.html' %} 
+{% block content %}
+
+<section class="base_expediente">
+  <!--Header-->
+  <div class="base_expediente_header">
+    <a href="{% url 'expediente_buscar' %}" class="base_expediente_back">
+      <i class="fa-solid fa-arrow-left"></i> Volver a la búsqueda
+    </a>
+    <p class="base_expediente_header_texto">
+      Expediente de: <span>{{ paciente.nombre }} {{paciente.apellidos }}</span>
+    </p>
+  </div>
+
+  <!--Card-->
+  <div class="base_expediente_card">
+    <div class="base_expediente_card_header">
+        <div class="base_expediente_card_perfil">
+            <div class="base_expediente_card_header_avatar">JR</div>
+
+            <div class="base_expediente_card_header_info">
+                <h2>{{ paciente.nombre }} {{ paciente.apellidos }}</h2>
+                <div class="base_expediente_card_header_info_adicional">
+                    <span>CURP: {{ paciente.curp }}</span>
+                    <span>• <i class="fa-regular fa-user fa-xs" style="color: #8d8991"></i> {{ paciente.edad }} años</span>
+                    <span>• <i class="fa-solid fa-droplet fa-xs" style="color: #8d8991"></i> {{ paciente.tipo_sangre }}</span>
+                </div>
+                {% if paciente.alergias %}<!--Cuando si tiene alergias-->
+                <div class="base_expediente_card_header_alergia_tag">
+                    Alergias: {{ paciente.alergias }}
+                </div>
+                {% else %}
+                <div class="base_expediente_card_header_sinalergia_tag">
+                    Alergias: Ninguna
+                </div>
+                {% endif %}
+            </div>
+        </div>
+      
+
+      <div class="base_expediente_card_header_actions">
+        <a href="{% url 'crear_nota_medica' paciente.id %}"
+          ><i class="fa-solid fa-plus fa-lg"></i> Nueva Nota Médica</a
+        >
+        <p>Última actualización: {{ ultima_nota.fecha_hora }}</p>
+      </div>
+    </div>
+
+    <div class="base_expediente_card_vitals_flex">
+        {% if ultima_nota %}
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Altura</p>
+            <p class="base_expediente_card_vitals_valor"> {{ ultima_nota.estatura|default:"--" }} m</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Peso</p>
+            <p class="base_expediente_card_vitals_valor"> {{ ultima_nota.peso|default:"--" }} kg</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">IMC</p>
+            <p class="base_expediente_card_vitals_valor"> {{ ultima_nota.imc|default:"--" }} </p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Presión arterial</p>
+            <p class="base_expediente_card_vitals_valor"> {{ ultima_nota.presion_arterial|default:"--" }}</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Ritmo cardiaco</p>
+            <p class="base_expediente_card_vitals_valor"> {{ ultima_nota.ritmo_cardiaco|default:"--" }} bpm</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Temperatura</p>
+            <p class="base_expediente_card_vitals_valor"> {{ ultima_nota.temperatura|default:"--" }} °C</p>
+        </div>
+
+        {% else %}
+         <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Altura</p>
+            <p class="base_expediente_card_vitals_valor"> --</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Peso</p>
+            <p class="base_expediente_card_vitals_valor"> --</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">IMC</p>
+            <p class="base_expediente_card_vitals_valor"> --</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Presión arterial</p>
+            <p class="base_expediente_card_vitals_valor"> --</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Ritmo cardiaco</p>
+            <p class="base_expediente_card_vitals_valor"> --</p>
+        </div>
+
+        <div class="base_expediente_card_vitals">
+            <p class="base_expediente_card_vitals_titulo">Temperatura</p>
+            <p class="base_expediente_card_vitals_valor"> --</p>
+        </div>
+        {% endif %}
+    </div>
+
+
+  </div>
+
+  <!--Navegacion (medicamentos, notas medicas, vacunacion)-->
+  <nav class="base_expediente_nav">
+    <a href="{% url 'expediente_notas' paciente.id %}"
+       class="{% if request.resolver_match.url_name == 'expediente_notas' %}base_expediente_nav_activo{% endif %}">
+       <i class="fa-solid fa-hospital"></i> Notas médicas
+    </a>
+
+    <a href="{% url 'expediente_medicamentos' paciente.id %}"
+       class="{% if request.resolver_match.url_name == 'expediente_medicamentos' %}base_expediente_nav_activo{% endif %}">
+       <i class="fa-solid fa-pills"></i> Medicamentos
+    </a>
+
+    <a href="{% url 'expediente_vacunas' paciente.id %}"
+       class="{% if request.resolver_match.url_name == 'expediente_vacunas' %}base_expediente_nav_activo{% endif %}">
+       <i class="fa-solid fa-syringe"></i> Vacunación
+    </a>
+</nav>
+
+    {% block contenido_menu %}{% endblock %}
+  
+</section>
+
     
-    <h2>Expediente de {{ paciente.nombre }} {{ paciente.apellidos }}</h2>
-    <p><strong>CURP:</strong> {{ paciente.curp }}</p>
-    <p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
-    <p><strong>Tipo de sangre:</strong> {{ paciente.tipo_sangre }}</p>
-    <p><strong>Alergias:</strong> {{ paciente.alergias|default:"Ninguna" }}</p>
-   <!--Signos vitales--> 
-    {% if ultima_nota %}
-      <p><strong>Peso:</strong> {{ ultima_nota.peso|default:"--" }}</p>
-      <p><strong>Estatura:</strong> {{ ultima_nota.estatura|default:"--" }}</p>
-      <p><strong>IMC:</strong> {{ ultima_nota.imc|default:"--" }}</p>
-      <p><strong>Presión arterial:</strong> {{ ultima_nota.presion_arterial|default:"--" }}</p>
-      <p><strong>Temperatura:</strong> {{ ultima_nota.temperatura|default:"--" }}</p>
-      <p><strong>Última actualización:</strong> {{ ultima_nota.fecha_hora }}</p>
-    {% else %}<!--No hay else, ya que se pone -- si no hay nada -->
-    {% endif %}
-        <!--Boton crear nota medica-->
-    <a href="{% url 'crear_nota_medica' paciente.id %}">+ Nueva Nota Médica</a>
 
-        <ul>
-            <li><a href="{% url 'expediente_notas' paciente.id %}">Notas Médicas</a></li>
-            <li><a href="{% url 'expediente_medicamentos' paciente.id %}">Medicamentos</a></li>
-            <li><a href="{% url 'expediente_vacunas' paciente.id %}">Vacunación</a></li>
-    </ul>
-
-</head>
-<body>
-
-    {% block content %}
-    {% endblock %}
-    
-</body>
-</html>
+{% endblock %}
