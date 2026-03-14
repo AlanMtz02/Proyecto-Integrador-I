@@ -15,5 +15,6 @@ urlpatterns = [
     path('expediente/<int:paciente_id>/medicamentos/', views.expediente_medicamentos, name='expediente_medicamentos'), 
     path('expediente/<int:paciente_id>/vacunas/', views.expediente_vacunas, name='expediente_vacunas'),
     path('expediente/<int:paciente_id>/notas/', views.expediente_notas, name='expediente_notas'),#Es la que se abre por defecto. Pantalla "principal" de expediente
-    path('expediente/<int:paciente_id>/notas/nueva/', views.crear_nota_medica, name='crear_nota_medica')
+    path('expediente/<int:paciente_id>/notas/nueva/', views.crear_nota_medica, name='crear_nota_medica'),
+    path("expediente/<int:paciente_id>/ver_nota_medica/<int:nota_id>/", views.ver_nota_medica, name="ver_nota_medica"),
     ]

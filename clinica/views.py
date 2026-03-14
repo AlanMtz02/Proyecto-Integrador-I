@@ -240,3 +240,13 @@ def pacientes_autocomplete(request):
             "telefono": p.telefono,
         })
     return JsonResponse(results, safe=False)
+
+#Vista para visualizar la nota medica (solo visualizar)
+@login_required
+def ver_nota_medica(request, paciente_id, nota_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    nota = get_object_or_404(NotaMedica, id=nota_id, paciente=paciente)
+    return render(request, "clinica/ver_nota_medica.html", {
+        "paciente": paciente,
+        "nota": nota
+    })

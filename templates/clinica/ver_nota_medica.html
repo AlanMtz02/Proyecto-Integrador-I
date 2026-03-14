@@ -1,0 +1,11 @@
+{% extends 'clinica/base.html' %}
+
+{% block content %}
+<section class="base_expediente_ver_nota">
+    <h3>Nota Médica del {{ nota.fecha_hora|date:"d/m/Y H:i" }}</h3>
+    <p><strong>Tipo de consulta:</strong> {{ nota.tipo_consulta }}</p>
+    <p><strong>Diagnóstico:</strong> {{ nota.diagnostico }}</p>
+    <p><strong>Tratamiento:</strong> {{ nota.tratamiento }}</p>
+    <p><strong>Observaciones:</strong> {{ nota.observaciones }}</p>
+</section>
+{% endblock %}

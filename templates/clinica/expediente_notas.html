@@ -6,14 +6,17 @@
     <h3>Historial de Notas Médicas</h3>
     <ul>
         {% for nota in notas %}
-            <li>{{ nota.fecha_hora|date:"d/m/Y H:i" }} - {{ nota.tipo_consulta }} - {{ nota.diagnostico }}</li>
+            <li>
+                <a href="{% url 'ver_nota_medica' paciente.id nota.id %}">
+                    {{ nota.fecha_hora|date:"d/m/Y H:i" }} - {{ nota.tipo_consulta }} - {{ nota.diagnostico }}
+                </a>
+            </li>
         {% empty %}
             <li>No hay notas médicas registradas.</li>
         {% endfor %}
     </ul>
 
 </section>
-
 
 {% endblock %}
 

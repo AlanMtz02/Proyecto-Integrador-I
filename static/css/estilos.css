@@ -891,6 +891,12 @@ tbody tr td {
     width: 100%;
 }
 
+.base_expediente_ver_nota{
+    background-color: var(--fondo);
+    width: 100%;
+    min-height: 100vh;
+}
+
 
 
 
