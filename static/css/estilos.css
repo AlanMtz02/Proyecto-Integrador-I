@@ -872,7 +872,95 @@ tbody tr td {
 
 /*AQUI COMIENZA LA SECCION DE NOTAS MEDICAS*/
 .base_expediente_notas_medicas{
+    background-color: #ffffff;
     width: 100%;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+}
+
+.base_expediente_notas_medicas h3{
+    color: var(--texto-negro);
+}
+
+.base_expediente_notas_medicas p{
+    color: var(--texto-claro);
+}
+
+.base_expediente_notas_medicas_card_link{
+    text-decoration: none;
+    padding: 16px;
+    border:1px solid #d2d2d2;
+    display: block;
+    box-shadow: 0 4px 8px rgba(79,57,246,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+}
+
+.base_expediente_notas_medicas_card_link:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(79,57,246,0.6);
+}
+
+.base_expediente_notas_medicas_header{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+
+.base_expediente_notas_medicas_header_icono{
+    background-color: #dcd9ff;
+    border-radius: 6px;
+    padding: 10px;    
+}
+
+.base_expediente_notas_medicas_body{
+    margin-top:14px;
+    margin-bottom: 14px;
+}
+
+.base_expediente_notas_medicas_header_info h4{
+    color: var(--texto-negro);
+    font-weight: 600;
+}
+
+.base_expediente_notas_medicas_header_info p{
+    color: var(--texto-claro);
+}
+
+.notas_medicas_fecha,.notas_medicas_hora,.notas_medicas_doctor{
+    font-size: 14px;
+}
+
+.notas_medicas_fecha i,.notas_medicas_hora i,.notas_medicas_doctor i{
+    margin-right: 4px;
+}
+
+
+.base_expediente_notas_medicas_diagnostico{
+    padding: 6px;
+    border-radius: 10px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #d2d2d2;
+    margin: 0;
+}
+
+.base_expediente_notas_medicas_diagnostico span{
+    color: var(--primario-boton-iconos);
+    width: 100%;
+}
+.base_expediente_notas_medicas_diagnostico p{
+    font-size: 16px;
+    color: var(--texto-negro);
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;/*Evita que se divida en varias lineas*/
+    overflow: hidden;/*oculta el texto que se desborda*/
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 
@@ -889,7 +977,23 @@ tbody tr td {
 /*AQUI COMIENZA LA SECCION DE MEDICAMENTOS*/
 .base_expediente_medicamentos{
     width: 100%;
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .base_expediente_ver_nota{
     background-color: var(--fondo);

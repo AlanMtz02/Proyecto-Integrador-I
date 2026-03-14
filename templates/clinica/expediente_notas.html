@@ -4,17 +4,37 @@
 {% block contenido_menu %}
 <section class="base_expediente_notas_medicas">
     <h3>Historial de Notas Médicas</h3>
-    <ul>
-        {% for nota in notas %}
-            <li>
-                <a href="{% url 'ver_nota_medica' paciente.id nota.id %}">
-                    {{ nota.fecha_hora|date:"d/m/Y H:i" }} - {{ nota.tipo_consulta }} - {{ nota.diagnostico }}
-                </a>
-            </li>
-        {% empty %}
-            <li>No hay notas médicas registradas.</li>
-        {% endfor %}
-    </ul>
+    <p>Revisa las citas medicas pasadas del paciente</p>
+
+    {% for nota in notas %}
+    <a href="{% url 'ver_nota_medica' paciente.id nota.id %}" class="base_expediente_notas_medicas_card_link">
+            <div class="base_expediente_notas_medicas_header">
+                <div class="base_expediente_notas_medicas_header_icono">
+                    <i class="fa-regular fa-calendar fa-lg" style="color: #4e38f5;"></i>
+                </div>
+                <div class="base_expediente_notas_medicas_header_info">
+                    <h4> {{ nota.tipo_consulta }} </h4>
+                    <p> {{ nota.motivo_consulta }} </p>
+                </div>
+
+            </div>
+
+            <div class="base_expediente_notas_medicas_body">
+                <p class="notas_medicas_fecha"><i class="fa-regular fa-calendar" style="color: #8d8991;"></i> {{ nota.fecha_hora|date:"l d \\d\\e F \\d\\e Y" }} </p>
+                <p class="notas_medicas_hora"><i class="fa-regular fa-clock" style="color: #8d8991;"></i> {{ nota.fecha_hora|date:"H:i" }} </p>
+                <p class="notas_medicas_doctor"><i class="fa-regular fa-user" style="color: #8d8991;"></i> {{ nota.doctor }} </p>
+            </div>
+
+            <div class="base_expediente_notas_medicas_diagnostico">
+                <p> <span>Diagnostico: </span> {{nota.diagnostico}} </p>
+            </div>
+
+
+    </a>
+    {% empty %}
+    <p>No hay notas medicas registradas</p>
+    {% endfor %}
+    
 
 </section>
 

@@ -5,7 +5,7 @@
     <h3>Nota Médica del {{ nota.fecha_hora|date:"d/m/Y H:i" }}</h3>
     <p><strong>Tipo de consulta:</strong> {{ nota.tipo_consulta }}</p>
     <p><strong>Diagnóstico:</strong> {{ nota.diagnostico }}</p>
-    <p><strong>Tratamiento:</strong> {{ nota.tratamiento }}</p>
-    <p><strong>Observaciones:</strong> {{ nota.observaciones }}</p>
+    <p><strong>Exploracion fisica: </strong> {{ nota.exploracion_fisica }}</p>
+    <p><strong>Motivo de consulta:</strong> {{ nota.motivo_consulta }}</p>
 </section>
 {% endblock %}
