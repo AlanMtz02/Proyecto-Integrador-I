@@ -977,10 +977,169 @@ tbody tr td {
 /*AQUI COMIENZA LA SECCION DE MEDICAMENTOS*/
 .base_expediente_medicamentos{
     width: 100%;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
     
 }
 
+.base_expediente_medicamentos_inicio h3{
+    color:var(--texto-negro);
+}
 
+.base_expediente_medicamentos_inicio p{
+    color: var(--texto-claro);
+}
+.base_expediente_medicamentos_card{
+    border-radius: 6px;
+    border: 1px solid #d2d2d2;
+    margin-top: 20px;
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
+}
+
+.base_expediente_medicamentos_card_header{
+    background: linear-gradient(90deg,
+        #6366f1 0%,/* Azul violáceo (izquierda) */
+        #8b5cf6 50%,/* Violeta medio (centro) */
+        #a855f7 100%/* Púrpura vibrante (derecha) */
+        );
+    padding: 12px;
+    border-radius: 6px 6px 0 0;
+}
+
+.base_expediente_medicamentos_card_header_flex{
+    display: flex;
+    gap:16px;
+    align-items: center;
+}
+
+.medicamentos_icono_fondo{
+    border-radius: 6px;
+    background-color: #909af7;
+    padding: 12px;
+}
+
+
+.medicamentos_receta_medica h4{
+    color: #ffffff;
+}
+
+.medicamentos_receta_medica p{
+    color:#ffffff;
+}
+
+.base_expediente_medicamentos_card_body{
+    padding: 12px;
+}
+
+.base_expediente_medicamentos_card_icono{
+    display: flex;
+    gap:8px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.base_expediente_medicamentos_card_icono p{
+    color: var(--texto-claro);
+    margin-bottom: 15px;
+}
+
+.base_expediente_medicamentos_card_body h4{
+    color:var(--texto-negro);
+}
+
+.base_expediente_medicamentos_card_body_diagnostico{
+    padding: 8px;
+    border-bottom: 1px solid #d2d2d2;
+    background-color: #fafafa;
+    color: black;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    color: var(--primario-boton-iconos);
+}
+
+
+.base_expediente_medicamentos_contenedor p:first-child{
+    color: var(--texto-negro);
+}
+
+.base_expediente_medicamento_individual{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d2d2d2;
+    border-radius: 6px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.base_expediente_medicamentos_no_hay p{
+    color:var(--texto-claro);
+}
+
+.base_expediente_medicamentos_nota_no_hay{
+    color: var(--texto-claro);
+}
+
+.base_expediente_medicamento_nombre_dosis{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.base_expediente_medicamento_nombre_dosis h4{
+    color: var(--texto-negro);
+    border-bottom: 2px solid var(--primario-boton-iconos);
+}
+
+.base_expediente_medicamento_nombre_dosis span{
+    background-color:#dcd9ff ;
+    padding: 8px;
+    color:var(--primario-boton-iconos);
+    border-radius: 6px;
+}
+
+.medicamento_frecuencia p:first-child{
+    color: var(--texto-claro);
+}
+
+.medicamento_frecuencia p:nth-child(2){
+    color: black;
+}
+
+.base_expediente_medicamento_frecuencia_duracion{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.medicamento_duracion p:first-child{
+    color: var(--texto-claro);
+}
+
+.medicamento_duracion p:nth-child(2){
+    color: black;
+}
+
+.base_expediente_medicamentos_indicaciones{
+    width: 100%;
+    background-color: #dcd9ff;
+    border-radius: 6px;
+    border-left: 8px solid var(--primario-boton-iconos);
+    padding: 20px;
+}
+
+.base_expediente_medicamentos_indicaciones p:first-child{
+    color:var(--texto-negro);
+    font-weight: 700;
+}
+
+.base_expediente_medicamentos_indicaciones p:nth-child(2){
+    color: var(--texto-negro);
+    font-weight: 300;
+}
 
 
 

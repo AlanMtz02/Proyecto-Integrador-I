@@ -122,12 +122,15 @@ def expediente_medicamentos(request, paciente_id): #Mismo argumento que esta en 
     medicamentos = Medicamento.objects.filter(paciente=paciente).order_by('-nota_medica__fecha_hora')
     
     # Ultima nota medica (none si no hay). La mas reciente. La usara base_expediente.html
-    ultima_nota = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora').first()    
+    ultima_nota = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora').first()   
+    
+    notas = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora') #notas medicas 
     
     return render(request, 'clinica/expediente_medicamentos.html', {
         'paciente': paciente, 
         'medicamentos': medicamentos,
         'ultima_nota':ultima_nota,#base_expediente.html
+        'notas':notas,
         }) 
 
 
@@ -141,10 +144,13 @@ def expediente_vacunas(request, paciente_id):
     # Ultima nota medica (none si no hay). La mas reciente. La usara base_expediente.html
     ultima_nota = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora').first()  
     
+    notas = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora') #notas medicas
+    
     return render(request, 'clinica/expediente_vacunas.html', {
         'paciente': paciente, 
         'vacunas': vacunas,
         'ultima_nota':ultima_nota,#base_expediente.html
+        'notas':notas,
         })
 
 

@@ -4,20 +4,71 @@
 {% block contenido_menu %}
 <section class="base_expediente_medicamentos">
 
+    <div class="base_expediente_medicamentos_inicio">
+        <h3>Historial de recetas</h3>
+        <p>Consulta las recetas prescritas al paciente</p>
+    </div>
+    {% for nota in notas %}
+<div class="base_expediente_medicamentos_card">
 
-<h3>Historial de Medicamentos</h3>
-<ul>
-    {% for med in medicamentos %}<!--Iterar sobre medicamentos-->
-        <li>
-            Fecha: {{med.nota_medica.fecha_hora|date:"d/m/Y H:i"}} {{ med.nombre }} - {{ med.dosis }} - {{ med.frecuencia }} - {{ med.duracion }}.
-            {% if med.indicaciones %}<!--Si existen indicaciones, se muestran-->
-                <br><em>Indicaciones especiales:</em> {{ med.indicaciones }}
+    <div class="base_expediente_medicamentos_card_header">
+        <div class="base_expediente_medicamentos_card_header_flex">
+            <div class="medicamentos_icono_fondo">
+                <i class="fa-regular fa-file-lines" style="color: #ffffff;"></i>
+            </div>
+            <div class="medicamentos_receta_medica">
+                <h4>Receta médica</h4>
+                <p>{{ nota.doctor }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="base_expediente_medicamentos_card_body">
+        <div class="base_expediente_medicamentos_card_icono">
+            <i class="fa-regular fa-calendar" style="color: #8d8991;"></i> 
+            <p>Fecha: {{ nota.fecha_hora|date:"l d \\d\\e F \\d\\e Y" }}</p>
+        </div>
+
+        <h4>Diagnóstico</h4>
+        <p class="base_expediente_medicamentos_card_body_diagnostico">{{ nota.diagnostico }}</p>
+
+        <h4>Medicamentos prescritos</h4>
+        {% for med in nota.medicamentos.all %}
+        <div class="base_expediente_medicamento_individual">
+            <div class="base_expediente_medicamento_nombre_dosis">
+                <h4>{{ med.nombre }}</h4>
+                <span>{{ med.dosis }}</span>
+            </div>
+            <div class="base_expediente_medicamento_frecuencia_duracion">
+                <div class="medicamento_frecuencia">
+                    <p>Frecuencia:</p>
+                    <p> {{ med.frecuencia }}</p>
+                </div>
+                <div class="medicamento_duracion">
+                    <p>Duración:</p>
+                    <p>{{ med.duracion }}</p>
+                </div>
+            </div>
+            {% if med.indicaciones %}
+            <div class="base_expediente_medicamentos_indicaciones">
+                <p>Indicaciones especiales</p>
+                <p>{{ med.indicaciones }}</p>
+            </div>
             {% endif %}
-        </li>
+        </div>
     {% empty %}
-        <li>No hay medicamentos registrados.</li>
+        <div class="base_expediente_medicamentos_nota_no_hay">
+            <p>No hay medicamentos registrados en esta nota.</p>
+        </div>
     {% endfor %}
-</ul>
+    </div>
+</div>
+{% empty %}
+<div class="base_expediente_medicamentos_no_hay">
+    <p>No hay medicamentos prescritos al paciente</p>
+</div>
+{% endfor %}
+
 
 </section>
 {% endblock %}
