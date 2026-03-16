@@ -75,71 +75,46 @@ class PacienteForm(forms.ModelForm):
             }
         
 
-# ------------------------- # Formulario de Nota Médica # ------------------------- 
-class NotaMedicaForm(forms.ModelForm): 
-    class Meta: 
-        model = NotaMedica 
-        #Campos
-        fields = [ 'tipo_consulta', 'motivo_consulta', 'peso', 'estatura', 'temperatura', 'presion_arterial', 'ritmo_cardiaco', 'exploracion_fisica', 'diagnostico', ] 
-        widgets={
-            #tipo consulta con opciones predefinidas. campo forms.select
-            'tipo_consulta':forms.Select(attrs={
-                #Aqui irian estilos 'class':'campo-select.SELECT porque son opciones predefinidas
-            }),
-            'motivo_consulta':forms.Textarea(attrs={
-                'rows':2,
-                'placeholder':'Motivo de consulta',
-            }),
-            #Signos vitales como entradas de numero. campo NumberInput
-            'peso':forms.NumberInput(attrs={
-                'placeholder':'Peso (kg)',
-            }),
-            'estatura':forms.NumberInput(attrs={
-                'placeholder':'Estatura (m)',
-            }),
-            'temperatura': forms.NumberInput(attrs={
-                'placeholder': 'Temperatura (°C)'
-            }), 
-            #Presion arterial como campo TextInput
-            'presion_arterial': forms.TextInput(attrs={
-                'placeholder': 'Presión Arterial (Ej: 120/80)'
-            }), 
-            'ritmo_cardiaco': forms.NumberInput(attrs={
-                'placeholder': 'Ritmo Cardíaco (bpm)'
-            }), 
-            'exploracion_fisica': forms.Textarea(attrs={
-                'rows': 3, 
-                'placeholder': 'Exploración física', 
-            }), 
-            'diagnostico': forms.Textarea(attrs={
-                'rows': 3,
-                'placeholder': 'Diagnóstico', 
-            }),
+class NotaMedicaForm(forms.ModelForm):
+    class Meta:
+        model = NotaMedica
+        fields = ['tipo_consulta', 'motivo_consulta', 'peso', 'estatura', 'temperatura',
+                  'presion_arterial', 'ritmo_cardiaco', 'exploracion_fisica', 'diagnostico', ]
+        #Labels que se muestran en los formularios
+        labels={'exploracion_fisica':'Exploración fisica y notas'}
+        widgets = {
+            'tipo_consulta': forms.Select(attrs={'class': 'nnm-form-control'}),
+            'motivo_consulta': forms.Textarea(attrs={'rows': 2, 'class': 'nnm-form-control', 'placeholder': 'Ej. Dolor de cabeza, Chequeo general...'}),
+            'peso': forms.NumberInput(attrs={'class': 'nnm-form-control nnm-input-vital', 'placeholder': '70'}),
+            'estatura': forms.NumberInput(attrs={'class': 'nnm-form-control nnm-input-vital', 'placeholder': '1.75'}),
+            'temperatura': forms.NumberInput(attrs={'class': 'nnm-form-control nnm-input-vital', 'placeholder': '36.5'}),
+            'presion_arterial': forms.TextInput(attrs={'class': 'nnm-form-control nnm-input-vital', 'placeholder': '120/80'}),
+            'ritmo_cardiaco': forms.NumberInput(attrs={'class': 'nnm-form-control nnm-input-vital', 'placeholder': '80'}),
+            'exploracion_fisica': forms.Textarea(attrs={'rows': 3, 'class': 'nnm-form-control', 'placeholder': 'Detalles de la exploración física...'}),
+            'diagnostico': forms.Textarea(attrs={'rows': 3, 'class': 'nnm-form-control', 'placeholder': 'Diagnóstico médico...'}),
         }
 
-            #  aplicar estilos CSS con clases personalizadas # Ejemplo:(attrs={ 'class': 'campo-select' })
 
-#-------------------------  # Formulario de Medicamento # ------------------------- 
-class MedicamentoForm(forms.ModelForm): 
-    class Meta: 
-        model = Medicamento 
-        #Campos
+class MedicamentoForm(forms.ModelForm):
+    class Meta:
+        model = Medicamento
         fields = ['nombre', 'dosis', 'frecuencia', 'duracion', 'indicaciones']
-        widgets = { 'nombre': forms.TextInput(attrs={'placeholder': 'Nombre del medicamento'}), 
-                   'dosis': forms.TextInput(attrs={'placeholder': 'Dosis'}), 
-                   'frecuencia': forms.TextInput(attrs={'placeholder': 'Frecuencia'}), 
-                   'duracion': forms.TextInput(attrs={'placeholder': 'Duración'}), 
-                   'indicaciones': forms.Textarea(attrs={'rows': 2, 'placeholder': 'Indicaciones (opcional)'}), } 
-        
-# ------------------------- # Formulario de Vacuna # ------------------------- 
-class VacunaForm(forms.ModelForm): 
-    class Meta: 
-        model = Vacuna 
-        #Campos
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'nnm-form-control', 'placeholder': 'Nombre del medicamento'}),
+            'dosis': forms.TextInput(attrs={'class': 'nnm-form-control', 'placeholder': 'Dosis'}),
+            'frecuencia': forms.TextInput(attrs={'class': 'nnm-form-control', 'placeholder': 'Ej. Cada 8 horas'}),
+            'duracion': forms.TextInput(attrs={'class': 'nnm-form-control', 'placeholder': 'Ej. 5 días'}),
+            'indicaciones': forms.Textarea(attrs={'rows': 2, 'class': 'nnm-form-control', 'placeholder': 'Indicaciones adicionales'}),
+        }
+
+
+class VacunaForm(forms.ModelForm):
+    class Meta:
+        model = Vacuna
         fields = ['nombre', 'dosis', 'lote', 'fecha_aplicacion']
-        widgets = { 'nombre': forms.Select(attrs={}),#Opciones predefinidas
-                   'dosis': forms.Select(attrs={}), #Opciones predefinidas
-                   'lote': forms.TextInput(attrs={'placeholder': 'Lote'}), 
-                   'fecha_aplicacion': forms.DateInput(attrs={'type': 'date'}), } 
-        
-        #El campo fecha_aplicacion ya tendrá un calendario gracias a type="date"
+        widgets = {
+            'nombre': forms.Select(attrs={'class': 'nnm-form-control'}),
+            'dosis': forms.Select(attrs={'class': 'nnm-form-control'}),
+            'lote': forms.TextInput(attrs={'class': 'nnm-form-control', 'placeholder': 'Número de lote'}),
+            'fecha_aplicacion': forms.DateInput(attrs={'type': 'date', 'class': 'nnm-form-control'}),
+        }

@@ -929,6 +929,11 @@ tbody tr td {
 
 .base_expediente_notas_medicas_header_info p{
     color: var(--texto-claro);
+    white-space: nowrap;/*Evita que se divida en varias lineas*/
+    overflow: hidden;/*oculta el texto que se desborda*/
+    text-overflow: ellipsis;
+    max-width: 790px;
+
 }
 
 .notas_medicas_fecha,.notas_medicas_hora,.notas_medicas_doctor{
@@ -946,6 +951,10 @@ tbody tr td {
     background-color: #fafafa;
     border-bottom: 1px solid #d2d2d2;
     margin: 0;
+    white-space: nowrap;/*Evita que se divida en varias lineas*/
+    overflow: hidden;/*oculta el texto que se desborda*/
+    text-overflow: ellipsis;
+    max-width: 790px;
 }
 
 .base_expediente_notas_medicas_diagnostico span{
@@ -960,7 +969,7 @@ tbody tr td {
     white-space: nowrap;/*Evita que se divida en varias lineas*/
     overflow: hidden;/*oculta el texto que se desborda*/
     text-overflow: ellipsis;
-    max-width: 100%;
+    max-width: 790px;
 }
 
 
@@ -1276,3 +1285,231 @@ tbody tr td {
 
 
 
+
+
+
+
+
+
+
+/* --- SECCION NUEVA NOTA MEDICA --- */
+.nueva_nota_medica {
+    padding: 30px;
+    width: 100%;
+    background-color: var(--fondo);
+    /* Fondo general sutil */
+}
+
+.nueva_nota_medica_header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--texto-claro);
+    padding: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.nueva_nota_medica_header_cancelar {
+    display: flex;
+    gap: 6px;
+    color: var(--texto-claro);
+    align-items: center;
+    text-decoration: none;
+    transition: background 0.4s;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.nueva_nota_medica_header_cancelar:hover {
+    background-color: #f4f4f4;
+}
+
+.nueva_nota_medica_header_info {
+    display: flex;
+    gap: 6px;
+    color: var(--texto-negro);
+    font-weight: 600;
+    align-items: center;
+}
+
+.nueva_nota_medica_header_guardar {
+    padding: 8px;
+    background-color: var(--primario-boton-iconos);
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    transition: background-color 0.4s;
+    cursor: pointer;
+}
+
+.nueva_nota_medica_header_guardar:hover {
+    background-color: #3a2cc0;
+}
+
+/* --- Layout Principal --- */
+.expediente-layout {
+    display: flex;
+    min-height: 500px;
+    margin-left: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+}
+
+.menu-lateral {
+    width: 230px;
+    background-color: #dfe2f8;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+
+    /* Configuracion Sticky */
+    position: sticky;
+    top:80px;/* Se queda pegado a 80px del tope */
+    height: calc(100vh - 100px);/* Altura de la pantalla menos el margen del header */
+    align-self: flex-start;/* Evita que se estire hasta el final del contenido */
+}
+
+.menu-lateral button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 16px;
+    color: #202334;
+    font-size: 14px;
+}
+
+.menu-lateral button.active {
+    background-color: #ffffff;
+    color: var(--primario-boton-iconos);
+    font-weight: bold;
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.6);
+}
+
+.contenido {
+    flex: 1;
+    padding: 30px;
+    background-color: #ffffff;
+    min-width: 0;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h4 {
+    color: var(--texto-negro);
+    margin-bottom: 25px;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #f1f3f5;
+    padding-bottom: 10px;
+}
+
+/* --- Estilos de Formulario nnm- --- */
+.nnm-form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d2d2d2;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--texto-negro);
+    margin-bottom: 15px;
+    transition: border 0.4s, background 0.4s;
+}
+
+.nnm-form-control:focus{
+    outline: none;
+    border-color: var(--primario-boton-iconos);
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
+}
+
+/* Estilo para los Signos Vitales (Grid) */ 
+#consulta p { 
+    display: inline-block; 
+    width: calc(19% - 10px); 
+    margin-right: 10px;
+    vertical-align: top;
+}
+
+#consulta p label {
+    display: block;
+    font-size: 11px;
+    color: var(--texto-claro);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Campos de texto largo ocupan todo el ancho */
+
+#consulta p:has(textarea){
+    display: block;
+    width: 100% !important;
+    margin-right: 0;
+    clear: both;
+    margin-top: 15px;
+}
+#consulta p:nth-child(2),
+/* Motivo */ 
+#consulta p:nth-child(3)
+/* Tipo */
+{
+    width: calc(50% - 15px);
+}
+
+.nnm-input-vital {
+    background-color: #ffffff;
+    border: 1px solid #d2d2d2;
+}
+
+/* --- Medicamentos y Vacunas --- */
+.medicamento-form,
+.vacuna-form {
+    border: 1px solid #d2d2d2;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+/* Botones de agregar */
+#add-medicamento,
+#add-vacuna {
+    width: 100%;
+    padding: 15px;
+    background-color: transparent;
+    border: 2px dashed #d2d2d2;
+    color: #202334;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#add-medicamento:hover,
+#add-vacuna:hover {
+    border-color: #4f39f6;
+    color: var(--primario-boton-iconos);
+    background-color: #f4f3ff;
+}

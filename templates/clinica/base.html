@@ -51,7 +51,7 @@
             </a>
 
             <a href="{% url 'expediente_buscar' %}" 
-            class="{% if request.resolver_match.url_name in 'expediente_buscar expediente_notas expediente_medicamentos expediente_vacunas' %}activo{% endif %}">
+            class="{% if request.resolver_match.url_name in 'expediente_buscar expediente_notas expediente_medicamentos expediente_vacunas crear_nota_medica ver_nota_medica' %}activo{% endif %}">
                 <i class="fa-regular fa-file-lines fa-lg"></i> 
                 Expediente
             </a>

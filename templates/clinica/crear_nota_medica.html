@@ -1,113 +1,79 @@
 <!--extendera de base.html-->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Nueva Nota Médica</title>
-    <style>
-        /* Layout principal: dos columnas */
-        .expediente-layout {
-            display: flex; /* activa flexbox */
-            min-height: 500px; /* altura mínima */
-        }
+{% extends 'clinica/base.html' %}
+{% block title %}Nueva nota médica {% endblock %}
+{% block content %}
+<section class="nueva_nota_medica">
+    <div class="nueva_nota_medica_header">
 
-        /* Menú lateral */
-        .menu-lateral {
-            width: 200px; /* ancho fijo */
-            background-color: #f0f0f0; /* fondo gris claro */
-            padding: 15px;
-            border-right: 1px solid #ccc; /* línea divisoria */
-        }
+        <a href="{% url 'expediente_notas' paciente.id %}" class="nueva_nota_medica_header_cancelar">
+            <i class="fa-solid fa-arrow-left fa-lg" style="color: #8d8991;"></i>
+            Cancelar y volver
+        </a>
 
-        .menu-lateral button {
-            display: block; /* cada botón ocupa toda la fila */
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 8px;
-            border: none;
-            background-color: #e0e0e0;
-            cursor: pointer;
-            text-align: left; /* texto alineado a la izquierda */
-        }
-
-        .menu-lateral button.active {
-            background-color: #007bff; /* azul */
-            color: white;
-            font-weight: bold;
-        }
-
-        /* Contenido a la derecha */
-        .contenido {
-            flex: 1; /* ocupa todo el espacio restante */
-            padding: 20px;
-            background-color: #fff;
-        }
-
-        /* Cada sección (consulta, medicamentos, vacunas) */
-        .tab-content {
-            display: none; /* oculto por defecto */
-        }
-        .tab-content.active {
-            display: block; /* solo se muestra el activo */
-        }
-    </style>
-</head>
-<body>
-
-<h2>Nueva Nota Médica para {{ paciente.nombre }}</h2>
-
-<form method="post">
-    {% csrf_token %}
-
-    <div class="expediente-layout">
-        <!-- Menú lateral -->
-        <div class="menu-lateral">
-            <button type="button" class="tab-btn active" data-target="consulta">Consulta</button>
-            <button type="button" class="tab-btn" data-target="medicamentos">Medicamentos</button>
-            <button type="button" class="tab-btn" data-target="vacunas">Vacunas</button>
+        <div class="nueva_nota_medica_header_info">
+            <i class="fa-solid fa-stethoscope fa-lg" style="color: #4f39f6;"></i>
+            <p>Nueva nota médica - {{ paciente.nombre }} {{ paciente.apellidos}}</p>
         </div>
 
-        <!-- Contenido -->
-        <div class="contenido">
-            <!-- Consulta -->
-            <div id="consulta" class="tab-content active">
-                <h4>Consulta General</h4>
-                {{ nota_form.as_p }}
-            </div>
-
-            <!-- Medicamentos -->
-            <div id="medicamentos" class="tab-content">
-                <h4>Medicamentos</h4>
-                {{ medicamento_formset.management_form }}
-                <div id="medicamento-forms">
-                    {% for form in medicamento_formset %}
-                        <div class="medicamento-form">
-                            {{ form.as_p }}
-                        </div>
-                    {% endfor %}
-                </div>
-                <button type="button" id="add-medicamento">+ Agregar Medicamento</button>
-            </div>
-
-            <!-- Vacunas -->
-            <div id="vacunas" class="tab-content">
-                <h4>Vacunas</h4>
-                {{ vacuna_formset.management_form }}
-                <div id="vacuna-forms">
-                    {% for form in vacuna_formset %}
-                        <div class="vacuna-form">
-                            {{ form.as_p }}
-                        </div>
-                    {% endfor %}
-                </div>
-                <button type="button" id="add-vacuna">+ Agregar Vacuna</button>
-            </div>
-        </div>
+        <button type="submit" class="nueva_nota_medica_header_guardar" form="nota_medica_form"><i class="fa-regular fa-floppy-disk fa-lg" style="color: #ffffff;"></i>Guardar Nota </button>
     </div>
 
-    <br><br>
-    <button type="submit" class="btn btn-primary">Guardar Nota Médica</button>
-</form>
+    <form method="post" id="nota_medica_form">
+    {% csrf_token %}
+        <div class="expediente-layout">
+
+            <div class="menu-lateral">
+                <button type="button" class="tab-btn active" data-target="consulta">Consulta general</button>
+                <button type="button" class="tab-btn" data-target="medicamentos">Medicamentos</button>
+                <button type="button" class="tab-btn" data-target="vacunas">Vacunas</button>
+            </div>
+
+            <!-- Contenido -->
+            <div class="contenido">
+                <!-- Consulta -->
+                <div id="consulta" class="tab-content active">
+                    <h4>Detalles de la consulta</h4>
+                    {{ nota_form.as_p }}
+                </div>
+
+                <!-- Medicamentos -->
+                <div id="medicamentos" class="tab-content">
+                    <h4>Medicamentos</h4>
+                    {{ medicamento_formset.management_form }}
+                    <div id="medicamento-forms">
+                        {% for form in medicamento_formset %}
+                            <div class="medicamento-form">
+                                {{ form.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-medicamento">+ Agregar Medicamento</button>
+                </div>
+
+                <!-- Vacunas -->
+                <div id="vacunas" class="tab-content">
+                    <h4>Vacunas</h4>
+                    {{ vacuna_formset.management_form }}
+                    <div id="vacuna-forms">
+                        {% for form in vacuna_formset %}
+                            <div class="vacuna-form">
+                                {{ form.as_p }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" id="add-vacuna">+ Agregar Vacuna</button>
+                </div>
+
+        </div>
+
+        
+
+    </form>
+
+
+
+</section>
+
 
 <script>
     // --- Pestañas ---
@@ -135,7 +101,10 @@
             new RegExp(prefix + '-0', 'g'),
             prefix + '-' + formCount
         );
-
+        // --- LIMPIAR LOS CAMPOS CLONADOS ---
+        newForm.querySelectorAll('input, textarea, select').forEach(input => {
+        input.value = ''; 
+        });
         container.appendChild(newForm);
         totalForms.value = formCount + 1;
     }
@@ -148,5 +117,4 @@
         addForm('vacuna');
     });
 </script>
-</body>
-</html>
+{% endblock %}

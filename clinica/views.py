@@ -138,9 +138,9 @@ def expediente_medicamentos(request, paciente_id): #Mismo argumento que esta en 
 def expediente_vacunas(request, paciente_id): 
     paciente = get_object_or_404(Paciente, id=paciente_id)
     
-    #Ordenas por fecha 
-    vacunas = Vacuna.objects.filter(paciente=paciente).order_by('fecha_aplicacion')
-    
+    # Ordenas por fecha
+    vacunas = Vacuna.objects.filter(paciente=paciente).select_related(
+    'nota_medica').order_by('-fecha_aplicacion')
     # Ultima nota medica (none si no hay). La mas reciente. La usara base_expediente.html
     ultima_nota = NotaMedica.objects.filter(paciente=paciente).order_by('-fecha_hora').first()  
     
