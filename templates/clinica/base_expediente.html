@@ -43,7 +43,7 @@
         <a href="{% url 'crear_nota_medica' paciente.id %}"
           ><i class="fa-solid fa-plus fa-lg"></i> Nueva Nota Médica</a
         >
-        <p>Última actualización: {{ ultima_nota.fecha_hora }}</p>
+        <p>Última actualización: {{ ultima_nota.fecha_hora|default:"Sin citas" }}</p>
       </div>
     </div>
 
@@ -82,12 +82,12 @@
         {% else %}
          <div class="base_expediente_card_vitals">
             <p class="base_expediente_card_vitals_titulo">Altura</p>
-            <p class="base_expediente_card_vitals_valor"> --</p>
+            <p class="base_expediente_card_vitals_valor"> -- m</p>
         </div>
 
         <div class="base_expediente_card_vitals">
             <p class="base_expediente_card_vitals_titulo">Peso</p>
-            <p class="base_expediente_card_vitals_valor"> --</p>
+            <p class="base_expediente_card_vitals_valor"> -- kg</p>
         </div>
 
         <div class="base_expediente_card_vitals">
@@ -102,12 +102,12 @@
 
         <div class="base_expediente_card_vitals">
             <p class="base_expediente_card_vitals_titulo">Ritmo cardiaco</p>
-            <p class="base_expediente_card_vitals_valor"> --</p>
+            <p class="base_expediente_card_vitals_valor"> -- bpm</p>
         </div>
 
         <div class="base_expediente_card_vitals">
             <p class="base_expediente_card_vitals_titulo">Temperatura</p>
-            <p class="base_expediente_card_vitals_valor"> --</p>
+            <p class="base_expediente_card_vitals_valor"> -- °C</p>
         </div>
         {% endif %}
     </div>

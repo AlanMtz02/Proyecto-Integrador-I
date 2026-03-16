@@ -1180,9 +1180,91 @@ tbody tr td {
 /*AQUI COMIENZA LA SECCION VACUNAS*/
 .base_expediente_vacunas{
     width: 100%;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
 }
 
+.base_expediente_vacunas_inicio h3{
+    color: var(--texto-negro);
+}
 
+.base_expediente_vacunas_inicio p{
+    color: var(--texto-claro);
+}
+
+.base_expediente_vacunas_card_cantidad{
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap:8px;
+    width: 260px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #d2d2d2;
+}
+
+.icono_vacunas_cantidad{
+    border-radius: 10px;
+    background-color: rgb(205, 255, 205);
+    padding: 10px;
+}
+
+.info_vacunas_cantidad p:first-child{
+    color:var(--texto-claro);
+}
+
+.info_vacunas_cantidad p:nth-child(2){
+    color: var(--texto-negro);
+}
+
+.base_expediente_vacunas_card{
+    padding: 20px;
+    background-color: #e1eff1;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    margin-bottom: 20px;
+}
+
+.base_expediente_vacunas_header{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.icono_vacunas_header{
+    border-radius: 10px;
+    background-color: #ffffff ;
+    padding: 12px;
+}
+
+.info_vacunas_header h4{
+    color: var(--texto-negro);
+}
+
+.info_vacunas_header p{
+    color: var(--texto-claro);
+}
+
+.base_expediente_vacunas_card_body{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.vacunas_card_body_titulo{
+    color: var(--texto-claro);
+}
+
+.vacunas_card_body_valor{
+    color: var(--texto-negro);
+}
 
 
 

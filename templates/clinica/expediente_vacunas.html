@@ -2,15 +2,56 @@
 {% extends 'clinica/base_expediente.html' %}
 {% block contenido_menu %}
 <section class="base_expediente_vacunas">
-    <h3>Historial de Vacunación</h3>
-    <ul>
-        {% for vac in vacunas %}
-            <li>{{ vac.get_nombre_display }} - {{ vac.dosis }} - {{ vac.fecha_aplicacion|date:"d/m/Y" }}</li> <!--Vacunas no tiene hora-->
-        {% empty %}
-            <li>No hay vacunas registradas.</li>
-        {% endfor %}
-    </ul>
+    <div class="base_expediente_vacunas_inicio">
+        <h3>Cartilla de vacunación</h3>
+        <p>Registro completo de vacunas aplicadas al paciente</p>
+    </div>
+    {% if vacunas %}
+    <div class="base_expediente_vacunas_card_cantidad">
+        <div class="icono_vacunas_cantidad">
+            <i class="fa-regular fa-circle-check fa-xl" style="color: rgb(29, 229, 29);"></i>
+        </div>
+        <div class="info_vacunas_cantidad">
+            <p>Completadas</p>
+            <p> {{ vacunas|length }} vacunas</p>
+        </div>
+        
+    </div>
+    {% for vacuna in vacunas %}
+    <div class="base_expediente_vacunas_card">
+        <div class="base_expediente_vacunas_header">
 
+            <div class="icono_vacunas_header">
+                <i class="fa-solid fa-crutch" style="color: #4f39f6;"></i>
+            </div>
+            <div class="info_vacunas_header">
+                <h4> {{ vacuna.get_nombre_display }} </h4>
+                <p> {{ vacuna.get_dosis_display }} </p>
+            </div>
+            
+
+        </div>
+
+        <div class="base_expediente_vacunas_card_body">
+
+            <div class="vacunas_card_body_fecha">
+                <p class="vacunas_card_body_titulo">Fecha de aplicación:</p>
+                <p class="vacunas_card_body_valor"> {{ vacuna.fecha_aplicacion|date:"l d \\d\\e F \\d\\e Y" }} </p>
+            </div>
+
+            <div class="vacunas_card_body_lote">
+                <p class="vacunas_card_body_titulo">Lote:</p>
+                <p class="vacunas_card_body_valor"> {{ vacuna.lote }} </p>
+            </div>
+        </div>
+    </div> 
+    {% endfor %}
+    {% else %}
+    <div class="base_expediente_vacunas_inicio">
+        <p>No hay vacunas registradas para el paciente.</p>
+    </div>
+    {% endif %}
+    
 </section>
 
 {% endblock %}

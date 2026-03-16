@@ -103,6 +103,9 @@ class Medicamento(models.Model):
 
 #clinica_vacuna
 class Vacuna(models.Model):
+    #El primer argumento es como se guarda en la bd y el segundo es la etiqueta legible para el html
+    # vacuna_get_campo_display
+    # {{vacuna.get_dosis_display}} para obtener el segundo argumento para la dosis
     VACUNA_CHOICES = [
         ('COVID-19', 'COVID-19 (Sars-CoV-2)'),
         ('BCG', 'BCG (Tuberculosis)'),
