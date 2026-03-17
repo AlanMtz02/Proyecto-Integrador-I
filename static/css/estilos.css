@@ -383,16 +383,18 @@ tbody tr td {
 .crear_paciente_form_control{
     width: 100%; /*Se estira todo el ancho disponible*/
     padding: 8px;
-    border: 1px solid var(--texto-claro);
     border-radius: 6px;
+    border: 1.5px solid #e0e4f0;
     font-size: 14px;
     transition: border-color 0.3s;/*Trancision del borde*/
     margin-top: 4px;
+    background-color: #fafbfc;
 }
 
 /*Al presionar el campo*/
 .crear_paciente_form_control:focus{
     border-color: var(--primario-boton-iconos);
+    background-color: #ffffff;
     outline: none;
     box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
 }
@@ -1568,3 +1570,139 @@ tbody tr td {
     margin-right: 10px;
     vertical-align: top;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/*ESTILOS PARA EL LOGIN*/
+.login_body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--fondo);
+    font-family: 'Poppins', sans-serif;
+}
+
+.login_container {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Icono Superior */
+.login_icon_circle {
+    width: 70px;
+    height: 70px;
+    background-color: #e0deff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+}
+
+.login_icon_circle i {
+    color: var(--primario-boton-iconos);
+    font-size: 32px;
+}
+
+.login_title {
+    color: var(--primario);
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.login_subtitle {
+    color: var(--texto-claro);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+/* Campos de Formulario */
+.login_field_group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.login_label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--texto-negro);
+    margin-bottom: 8px;
+}
+
+/* Estilo para los inputs generados por Django */
+.login_input_wrapper input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #e0e4f0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    border: 1px solid var(--texto-claro);
+    background-color: #fafbfc;
+    transition: border-color 0.3s;/*Trancision del borde*/
+}
+
+.login_input_wrapper input:focus {
+    outline: none;
+    border-color: var(--primario-boton-iconos);
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(79, 57, 246, 0.3);
+}
+
+/* Mensaje de Error */
+.login_error_message {
+    background-color: #fff5f5;
+    color: #e74c3c;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    border: 1px solid #ffacac;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Boton */
+.login_button_group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.login_btn_primary {
+    flex: 2;
+    background-color: var(--primario-boton-iconos);
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.4s;
+}
+
+.login_btn_primary:hover {
+    background-color: #3a2cc0;
+}
+
