@@ -1,11 +1,108 @@
 {% extends 'clinica/base.html' %}
+{% block title %}Ver nota médica{% endblock %}
 
 {% block content %}
-<section class="base_expediente_ver_nota">
-    <h3>Nota Médica del {{ nota.fecha_hora|date:"d/m/Y H:i" }}</h3>
-    <p><strong>Tipo de consulta:</strong> {{ nota.tipo_consulta }}</p>
-    <p><strong>Diagnóstico:</strong> {{ nota.diagnostico }}</p>
-    <p><strong>Exploracion fisica: </strong> {{ nota.exploracion_fisica }}</p>
-    <p><strong>Motivo de consulta:</strong> {{ nota.motivo_consulta }}</p>
+<section class="nueva_nota_medica">
+    <div class="nueva_nota_medica_header">
+        <a href="{% url 'expediente_notas' paciente.id %}" class="nueva_nota_medica_header_cancelar">
+            <i class="fa-solid fa-arrow-left fa-lg" style="color: #8d8991;"></i>
+            Cancelar y volver
+        </a>
+
+        <div class="nueva_nota_medica_header_info">
+            <i class="fa-solid fa-stethoscope fa-lg" style="color: #4f39f6;"></i>
+            <p>Visualizando nota Médica - {{ nota.fecha_hora|date:"d/M/Y" }} {{ nota.fecha_hora|date:"H:i" }} hrs - {{ paciente.nombre }} {{ paciente.apellidos }}</p>
+        </div>
+
+        <div>
+
+        </div>
+
+        
+    </div>
+
+    <div class="expediente-layout">
+        <div class="menu-lateral">
+            <button type="button" class="tab-btn active" data-target="consulta">Consulta general</button>
+            <button type="button" class="tab-btn" data-target="medicamentos">Medicamentos</button>
+            <button type="button" class="tab-btn" data-target="vacunas">Vacunas</button>
+        </div>
+
+        <div class="contenido">
+            <div id="consulta" class="tab-content active">
+                <h4>Detalles de la consulta</h4>
+                
+                <p class="ver_nota_medica_full_row">
+                    <label>TIPO DE CONSULTA:</label>
+                    <span class="nnm-form-control ver_nota_medica_field">{{ nota.get_tipo_consulta_display }}</span>
+                </p>
+
+                <p class="ver_nota_medica_full_row">
+                    <label>MOTIVO DE CONSULTA:</label>
+                    <span class="nnm-form-control ver_nota_medica_field">{{ nota.motivo_consulta }}</span>
+                </p>
+
+                <p><label>PESO (KG):</label><span class="nnm-form-control nnm-input-vital ver_nota_medica_field">{{ nota.peso|default:"--" }}</span></p>
+                <p><label>ESTATURA (M):</label><span class="nnm-form-control nnm-input-vital ver_nota_medica_field">{{ nota.estatura|default:"--" }}</span></p>
+                <p><label>TEMPERATURA (°C):</label><span class="nnm-form-control nnm-input-vital ver_nota_medica_field">{{ nota.temperatura|default:"--" }}</span></p>
+                <p><label>PRESIÓN ARTERIAL:</label><span class="nnm-form-control nnm-input-vital ver_nota_medica_field">{{ nota.presion_arterial|default:"--" }}</span></p>
+                <p><label>RITMO CARDÍACO (BPM):</label><span class="nnm-form-control nnm-input-vital ver_nota_medica_field">{{ nota.ritmo_cardiaco|default:"--" }}</span></p>
+
+                <p class="ver_nota_medica_full_row">
+                    <label>EXPLORACIÓN FÍSICA Y NOTAS:</label>
+                    <span class="nnm-form-control ver_nota_medica_field ver_nota_medica_text_area">{{ nota.exploracion_fisica }}</span>
+                </p>
+
+                <p class="ver_nota_medica_full_row">
+                    <label>DIAGNÓSTICO:</label>
+                    <span class="nnm-form-control ver_nota_medica_field ver_nota_medica_text_area">{{ nota.diagnostico }}</span>
+                </p>
+            </div>
+            <div id="medicamentos" class="tab-content">
+                <h4>Medicamentos</h4>
+                {% for med in nota.medicamentos.all %}
+                <div class="medicamento-form">
+                    <p class="ver_nota_medica_full_row"><label>Nombre del Medicamento</label><span class="nnm-form-control ver_nota_medica_field">{{ med.nombre }}</span></p>
+                    <p><label>Frecuencia</label><span class="nnm-form-control ver_nota_medica_field">{{ med.frecuencia }}</span></p>
+                    <p><label>Duración</label><span class="nnm-form-control ver_nota_medica_field">{{ med.duracion }}</span></p>
+                    <p class="ver_nota_medica_full_row"><label>Indicaciones Adicionales</label><span class="nnm-form-control ver_nota_medica_field ver_nota_medica_text_area">{{ med.indicaciones|default:"Sin indicaciones" }}</span></p>
+                </div>
+                {% empty %}
+                <div class="ver_nota_medica_vacio">
+                    <p>No se recetaron medicamentos en esta consulta.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div id="vacunas" class="tab-content">
+                <h4>Vacunas</h4>
+                {% for vac in nota.vacunas.all %}
+                <div class="vacuna-form">
+                    <p class="ver_nota_medica_full_row"><label>Vacuna Aplicada</label><span class="nnm-form-control ver_nota_medica_field">{{ vac.get_nombre_display }}</span></p>
+                    <p><label>Dosis</label><span class="nnm-form-control ver_nota_medica_field">{{ vac.get_dosis_display }}</span></p>
+                    <p><label>Lote</label><span class="nnm-form-control ver_nota_medica_field">{{ vac.lote }}</span></p>
+                </div>
+                {% empty %}
+                <div class="ver_nota_medica_vacio">
+                    <p>No se aplicaron vacunas en esta consulta.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.target).classList.add('active');
+        });
+    });
+</script>
 {% endblock %}

@@ -1163,11 +1163,6 @@ tbody tr td {
 
 
 
-.base_expediente_ver_nota{
-    background-color: var(--fondo);
-    width: 100%;
-    min-height: 100vh;
-}
 
 
 
@@ -1434,6 +1429,7 @@ tbody tr td {
     color: var(--texto-negro);
     margin-bottom: 15px;
     transition: border 0.4s, background 0.4s;
+    resize: vertical;
 }
 
 .nnm-form-control:focus{
@@ -1512,4 +1508,63 @@ tbody tr td {
     border-color: #4f39f6;
     color: var(--primario-boton-iconos);
     background-color: #f4f3ff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- ESTILOS DE VISUALIZACIÓN (ver_nota_medica) --- */
+
+/* Forzar que el campo ocupe el 100% de la fila (reemplaza el :has(textarea)) */
+.ver_nota_medica_full_row {
+    display: block !important;
+    width: 100% !important;
+    margin-right: 0 !important;
+    clear: both;
+}
+
+/* Estilo para que el span parezca un input bloqueado */
+.ver_nota_medica_field {
+    display: block;
+    background-color: #f8f9fa !important;
+    /* Gris suave de tu diseño */
+    border: 1px solid #d2d2d2 !important;
+    cursor: default;
+    min-height: 42px;
+}
+
+/* Estilo para simular el área de texto */
+.ver_nota_medica_text_area {
+    min-height: 100px;
+    height: auto;
+    white-space: pre-wrap;
+    /* Mantiene párrafos */
+    padding-top: 10px;
+}
+
+/* Mantenemos tu regla de labels para que se vea idéntico */
+#consulta p label {
+    display: block;
+    font-size: 11px;
+    color: var(--texto-claro);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Aseguramos que los vitales sigan midiendo 19% */
+#consulta p:not(.ver_nota_medica_full_row) {
+    display: inline-block;
+    width: calc(19% - 10px);
+    margin-right: 10px;
+    vertical-align: top;
 }
