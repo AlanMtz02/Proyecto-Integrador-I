@@ -26,5 +26,7 @@ urlpatterns = [
     
     path('', lambda request: redirect('login')),  # redirige la raíz al login
     
-    path('',include('clinica.urls'))
+    path('',include('clinica.urls')),
+    
+    path('usuarios/',include('usuarios.urls'))
 ]

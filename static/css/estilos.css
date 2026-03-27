@@ -1553,7 +1553,7 @@ tbody tr td {
     padding-top: 10px;
 }
 
-/* Mantenemos tu regla de labels para que se vea idéntico */
+/* Mantenemos regla de labels para que se vea idéntico */
 #consulta p label {
     display: block;
     font-size: 11px;
@@ -1634,6 +1634,10 @@ tbody tr td {
     margin-bottom: 30px;
 }
 
+.login_subtitle a{
+    text-decoration: none;
+    color: var(--primario);
+}
 /* Campos de Formulario */
 .login_field_group {
     text-align: left;

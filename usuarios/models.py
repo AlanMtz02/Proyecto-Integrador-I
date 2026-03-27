@@ -8,8 +8,8 @@ class Usuario(AbstractUser):
     telefono = models.CharField(max_length=15, null=True, blank=True, verbose_name="Teléfono")
     es_activo = models.BooleanField(default=True, verbose_name="Estatus Activo")
 
-    def __str__(self):
-        # Si tiene cédula, se presenta como Doctor, si no, como Admin
-        if self.cedula:
-            return f"Dr. {self.first_name} {self.last_name}"
-        return f"Admin: {self.username}"
+    # def __str__(self):
+    #     # Si tiene cédula, se presenta como Doctor, si no, como Admin
+    #     if self.cedula:
+    #         return f"Dr. {self.first_name} {self.last_name}"
+    #     return f"Admin: {self.username}"
