@@ -69,7 +69,14 @@ def buscar_pacientes(request):
     resultados = [] 
     if query: 
         #Busqueda por nombre completo, curp,telefono
-        pacientes = Paciente.objects.filter( nombre__icontains=query ) | Paciente.objects.filter( apellidos__icontains=query ) | Paciente.objects.filter( curp__icontains=query ) | Paciente.objects.filter( telefono__icontains=query ) 
+        # Busqueda por nombre completo, curp, telefono
+        # Agregamos .filter(es_activo=True) al final de toda la cadena de búsqueda
+        pacientes = (
+            Paciente.objects.filter(nombre__icontains=query) |
+            Paciente.objects.filter(apellidos__icontains=query) |
+            Paciente.objects.filter(curp__icontains=query) |
+            Paciente.objects.filter(telefono__icontains=query)
+        ).filter(es_activo=True) 
         for p in pacientes: #Guardamos los resultados de la busqueda
             resultados.append({
                 'id': p.id, 
