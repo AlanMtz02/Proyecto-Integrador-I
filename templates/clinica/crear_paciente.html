@@ -30,6 +30,11 @@
                     <div class="crear_paciente_form_group">
                         <p>CURP</p>
                         {{ form.curp }}
+                        {% if form.curp.errors %}
+                            <div class="error-message" style="color: red;">
+                                {{ form.curp.errors|striptags }}
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="crear_paciente_form_group">

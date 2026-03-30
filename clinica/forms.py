@@ -33,7 +33,7 @@ class PacienteForm(forms.ModelForm):
             
             'curp':forms.TextInput(attrs={
                 'class':'crear_paciente_form_control',
-                'placeholder':'CURP del paciente'
+                'placeholder':'CURP del paciente',
             }),
             
             
@@ -73,6 +73,13 @@ class PacienteForm(forms.ModelForm):
             })
             
             }
+        
+    def clean_curp(self):
+        curp = self.cleaned_data.get('curp')
+        if curp and len(curp) != 18:
+            raise forms.ValidationError(
+                "El CURP debe tener exactamente 18 caracteres.")
+        return curp.upper() if curp else curp
         
 
 class NotaMedicaForm(forms.ModelForm):
